@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="50"
+   height="50"
+   viewBox="0 0 13.229167 13.229167"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="navbar1-baked.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#0a5a9c"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.9195959"
+     inkscape:cx="-1.5691629"
+     inkscape:cy="46.094614"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1914"
+     inkscape:window-height="2076"
+     inkscape:window-x="0"
+     inkscape:window-y="81"
+     inkscape:window-maximized="0"
+     units="px" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="bk" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-283.77084)">
+    <g
+       aria-label="a"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       id="text3742">
+      <path
+         d="m 3.2511464,291.6 q -1.2292101,0 -1.7032552,0.28112 -0.4740452,0.28112 -0.4740452,0.95911 0,0.54019 0.3527778,0.8599 0.3582899,0.31419 0.9701389,0.31419 0.8433594,0 1.3504774,-0.59531 0.5126302,-0.60083 0.5126302,-1.59302 V 291.6 Z m 2.02296,-0.41893 v 3.52227 H 4.2598703 v -0.93707 q -0.3472656,0.56224 -0.865408,0.83234 -0.5181423,0.26458 -1.2677951,0.26458 -0.9480903,0 -1.51032987,-0.52917 -0.55672743,-0.53467 -0.55672743,-1.42764 0,-1.0418 0.69453125,-1.57097 0.70004345,-0.52916 2.08359375,-0.52916 h 1.4221354 v -0.0992 q 0,-0.70005 -0.4630208,-1.08038 -0.4575087,-0.38585 -1.2898438,-0.38585 -0.5291666,0 -1.0307725,0.12677 -0.50160594,0.12678 -0.96462677,0.38034 v -0.93706 q 0.55672747,-0.21498 1.08038197,-0.31971 0.5236545,-0.11024 1.0197482,-0.11024 1.3394532,0 2.0009115,0.69453 0.6614583,0.69453 0.6614583,2.10564 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;stroke-width:0.26458332"
+         id="path1424" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3744"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion3746"><rect
+           id="rect3748"
+           width="60"
+           height="180"
+           x="194.28572"
+           y="-1110" /></flowRegion><flowPara
+         id="flowPara3750" /></flowRoot>    <g
+       aria-label="z"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       id="text3754">
+      <path
+         d="m 5.2279014,290.85981 h 4.8176216 v 0.92604 l -3.8144098,4.43728 h 3.8144098 v 0.81029 H 5.0900976 v -0.92604 l 3.8144097,-4.43729 H 5.2279014 Z"
+         style="font-size:11.28888893px;fill:#ffffff;stroke-width:0.26458332"
+         id="path1431" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="1.5702084"
+       y="291.48758"
+       id="text1429"><tspan
+         sodipodi:role="line"
+         id="tspan1427"
+         x="1.5702084"
+         y="300.85135"
+         style="stroke-width:0.26458332" /></text>
+  </g>
+</svg>

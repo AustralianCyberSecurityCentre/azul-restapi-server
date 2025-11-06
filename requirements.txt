@@ -1,0 +1,14 @@
+aiofiles>=0.6.0
+azul-bedrock
+cachetools
+click>=7.1.2
+fastapi
+loguru
+prometheus-client
+starlette-exporter>=0.7.0
+uvicorn[standard]>=0.13.3
+pydantic-settings>2
+pynacl>=1.4.0
+python-jose[cryptography]>=3.2.0
+httpx
+python-multipart>=0.0.12

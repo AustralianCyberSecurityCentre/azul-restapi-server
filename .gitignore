@@ -1,0 +1,106 @@
+#
+# Python Ignores
+#
+# Btye-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# C extensions
+*.so
+
+# Distribuyion / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.eggs
+.venv/
+
+# Installer logs
+pip
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+#Rope
+.ropeproject
+
+# Django
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+#
+# Eclipse
+#
+# General
+*.pydevproject
+.metadata
+.gradle
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# Texlipse plugin
+.texlipse
+
+#other eclipse
+.tern-project
+
+# pycharm
+.idea/
+*.iml
+
+# logs
+log
+logs
+
+# Environmental variables
+.env
