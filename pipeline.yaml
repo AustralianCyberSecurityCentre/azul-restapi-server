@@ -24,6 +24,7 @@ resources:
     - pipeline: azul-metastore
       source: ag-github-dev\ag-azul-metastore-release-dev
       project: Azul
+      trigger: true
 
 extends:
   template: v2/stages/test-build-publish.yaml@PipelineTemplates
