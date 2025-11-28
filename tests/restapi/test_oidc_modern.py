@@ -81,4 +81,4 @@ class TestOIDC(unittest.TestCase):
 
         # no token
         resp = client.get("/v0/users/me")
-        self.assertEqual(403, resp.status_code)
+        self.assertEqual(401, resp.status_code)
