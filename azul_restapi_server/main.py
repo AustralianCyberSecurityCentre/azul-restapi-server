@@ -53,8 +53,13 @@ if settings.restapi.security == "oidc":
 if settings.oidc.swagger_redirect_url:
     optional_settings["swagger_ui_oauth2_redirect_url"] = settings.oidc.swagger_redirect_url
 
+api_description = """This is the Azul swagger RestAPI used for developing and testing out RestAPI endpoints.<br/>
+<b>IMPORTANT</b>: Ensure you Authorize (green padlock) before attempting to use the restapi.<br/>
+You'll need to click Authorize within the menu that pops up to Authorize with the OIDC provider."""
+
 app = FastAPI(
     title="Azul",
+    description=api_description,
     version=str(__version__),
     openapi_url=f"/{api_prefix}/openapi.json",
     root_path=root_path,
