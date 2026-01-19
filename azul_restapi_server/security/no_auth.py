@@ -14,7 +14,7 @@ def validate_token(request: Request, token: str = Depends(lambda: None)) -> User
     request.state.user_info = oidc_shared.claims_to_user(
         {
             "exp": -1,
-            "token_type": "Bearer",
+            "token_type": "Bearer",  # nosec B105
             "preferred_username": "anony-moose",
             "org": "testing",
             "roles": ["validated"],
