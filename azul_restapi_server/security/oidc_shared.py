@@ -100,7 +100,7 @@ def validate(token: str, audience: str) -> UserInfo:
             status_code=HTTP_401_UNAUTHORIZED,
             detail="Not authenticated, bad jwt",
             headers={"WWW-Authenticate": "Bearer"},
-        )
+        ) from e
     user_info = claims_to_user(claims)
     user_info.credentials = Credentials(unique=user_info.unique_id, format="oauth", token=token)
     return user_info

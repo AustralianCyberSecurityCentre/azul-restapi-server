@@ -1,39 +1,145 @@
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools >= 64",
-    "setuptools_scm >= 8",
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "azul-restapi-server"
+description = "Public Azul RESTful API server."
+dynamic = ["version"]
+readme = "README.md"
+license = "MIT"
+license-files = ["license.md"]
+authors = [
+  { name="Azul"},
+]
+requires-python = ">=3.12"
+classifiers=[
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "aiofiles>=0.6.0",
+    "azul-bedrock>=9.0.32",
+    "cachetools>=7.0.0",
+    "click>=7.1.2",
+    "fastapi>=0.128.0",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "prometheus-client>=0.24.1",
+    "pydantic-settings>2",
+    "pynacl>=1.4.0",
+    "python-jose[cryptography]>=3.2.0",
+    "python-multipart>=0.0.12",
+    "starlette-exporter>=0.7.0",
+    "uvicorn[standard]>=0.13.3",
 ]
 
-[tool.black]
-line-length = 119
-target-version = ["py310"]
-exclude = '''
-(
-  /(
-      \.eggs
-    | \.git
-    | \.tox
-    | \.venv
-    | .*\.egg-info
-    | __pycache__
-    | build
-    | dist
-  )/
-)
-'''
+[project.scripts]
+azul-restapi-server = "azul_restapi_server.cli:run"
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+[project.urls]
+Documentation = "https://australiancybersecuritycentre.github.io/azul/"
+Repository = "https://github.com/AustralianCyberSecurityCentre/azul-restapi-server"
 
-[tool.cruft]
-skip = [
-    "debian.txt",
-    "README.md",
-    "azul_restapi_server",
-    "tests"
-]
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+default = true
 
-[tool.setuptools_scm]
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
 version_scheme = "only-version"
+
+[tool.hatch.version.fallback]
+version = "0.0.0"
+
+[dependency-groups]
+dev = [
+    "cart>=1.2.3",
+    "httpretty>=1.1.4",
+    "httpx>=0.28.1",
+    "pytest>=9.0.2",
+    "tox>=4.34.1",
+]
+
+[tool.ruff]
+# formatter config
+line-length = 119
+indent-width = 4
+target-version = "py312"
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".env",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Flake8 linting equivalent but for ruff
+[tool.ruff.lint]
+select = [
+  # isort
+  "I",
+  # Code styles
+  "E4",
+  "E7",
+  "E9",
+  # pyflakes
+  "F",
+  # flake8 bug bear
+  "B",
+  # flake8 doc strings
+  "D",
+  # bandit
+  "S",
+]
+ignore = ["B008","C901","D104","D107","E203"]
+exclude = [
+    "tests/*",
+]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+
+[tool.ruff.lint.pydocstyle]
+# Use the Google docstring convention
+convention = "google"
+
+# Make formatter match black
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
