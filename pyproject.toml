@@ -43,6 +43,9 @@ dependencies = [
 [project.scripts]
 azul-restapi-server = "azul_restapi_server.cli:run"
 
+[project.entry-points."azul_restapi.plugin"]
+users = "azul_restapi_server.api.v1.users:router"
+
 [project.urls]
 Documentation = "https://australiancybersecuritycentre.github.io/azul/"
 Repository = "https://github.com/AustralianCyberSecurityCentre/azul-restapi-server"
