@@ -16,7 +16,7 @@ Example Entry point for plugins:
 
 import importlib.metadata
 
-from azul_bedrock.exceptions import BaseError
+from azul_bedrock.exceptions_bedrock import BaseError
 from fastapi import APIRouter, Depends
 
 from azul_restapi_server.security import validate_token

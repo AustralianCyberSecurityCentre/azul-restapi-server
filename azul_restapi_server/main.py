@@ -9,7 +9,7 @@ import sys
 import traceback
 from concurrent.futures import ThreadPoolExecutor
 
-from azul_bedrock.exceptions import ApiException, DispatcherApiException
+from azul_bedrock.exceptions_bedrock import ApiException, DispatcherApiException
 from fastapi import FastAPI, Request
 from fastapi.openapi.docs import (
     get_redoc_html,

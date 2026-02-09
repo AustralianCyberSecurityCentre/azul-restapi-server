@@ -2,7 +2,7 @@
 
 import copy
 
-from azul_bedrock.exceptions import BaseError
+from azul_bedrock.exceptions_bedrock import BaseError
 from azul_bedrock.models_auth import UserInfo
 from fastapi import APIRouter, Request
 
