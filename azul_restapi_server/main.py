@@ -145,7 +145,7 @@ def base_api_exception_handler(request, exc: ApiException | DispatcherApiExcepti
         traceback.print_exc(file=sys.stderr)
 
     content = {
-        "ref": exc.detail.get("ref", "no ref supplied"),
+        "internal": exc.detail.get("internal", "no internal supplied"),
         "message": exc.detail.get("external", "no message supplied"),
     }
     return JSONResponse(status_code=exc.status_code, content=content)
