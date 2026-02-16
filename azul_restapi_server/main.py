@@ -9,7 +9,7 @@ import sys
 import traceback
 from concurrent.futures import ThreadPoolExecutor
 
-from azul_bedrock.exceptions import ApiException, DispatcherApiException
+from azul_bedrock.exceptions_bedrock import ApiException, DispatcherApiException
 from fastapi import FastAPI, Request
 from fastapi.openapi.docs import (
     get_redoc_html,
@@ -145,7 +145,7 @@ def base_api_exception_handler(request, exc: ApiException | DispatcherApiExcepti
         traceback.print_exc(file=sys.stderr)
 
     content = {
-        "ref": exc.detail.get("ref", "no ref supplied"),
+        "internal": exc.detail.get("internal", "no internal supplied"),
         "message": exc.detail.get("external", "no message supplied"),
     }
     return JSONResponse(status_code=exc.status_code, content=content)
