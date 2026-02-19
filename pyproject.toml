@@ -26,6 +26,7 @@ classifiers=[
 dependencies = [
     "aiofiles>=0.6.0",
     "azul-bedrock>=9.0.32",
+    "azul-security>=10.0.18",
     "cachetools>=7.0.0",
     "click>=7.1.2",
     "fastapi>=0.128.0",
@@ -45,6 +46,8 @@ azul-restapi-server = "azul_restapi_server.cli:run"
 
 [project.entry-points."azul_restapi.plugin"]
 users = "azul_restapi_server.api.v1.users:router"
+pat = "azul_restapi_server.api.v1.pat_api:router"
+
 
 [project.urls]
 Documentation = "https://australiancybersecuritycentre.github.io/azul/"
@@ -68,6 +71,7 @@ dev = [
     "cart>=1.2.3",
     "httpretty>=1.1.4",
     "httpx>=0.28.1",
+    "pyjwt>=2.11.0",
     "pytest>=9.0.2",
     "tox>=4.34.1",
 ]

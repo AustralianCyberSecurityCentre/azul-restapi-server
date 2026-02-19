@@ -43,7 +43,10 @@ else:
 # Optional settings to pass into App setup
 optional_settings = {}
 get_ui_optional_settings = {}
-if settings.restapi.security == "oidc":
+if (
+    settings.restapi.security == settings.RestapiSecurityEnum.oidc
+    or settings.restapi.security == settings.RestapiSecurityEnum.oidc_pat
+):
     optional_settings["swagger_ui_init_oauth"] = {
         "clientId": settings.oidc.client_id,
         "scopes": settings.oidc.scopes,
