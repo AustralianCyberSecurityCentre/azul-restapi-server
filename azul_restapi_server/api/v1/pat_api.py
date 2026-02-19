@@ -1,3 +1,5 @@
+"""API for PAT creation and deletion."""
+
 import datetime
 import secrets
 import string
@@ -100,7 +102,9 @@ def _create_azul_security_index():
         if not session.indices.exists(index=index_name):
             session.indices.create(index=index_name)
     except Exception as e:
-        raise exceptions_bedrock.BaseAzulException(internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)})
+        raise exceptions_bedrock.BaseAzulException(
+            internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)}
+        ) from e
 
 
 # TODO - this needs to move
@@ -108,12 +112,15 @@ _create_azul_security_index()
 
 
 def get_user_creds(request: Request) -> UserInfo:
+    """Get user credentials for API call."""
     try:
         user_info = request.state.user_info
         user_info_parsed = UserInfo.model_validate(user_info)
         return user_info_parsed
     except AttributeError as e:
-        raise exceptions_bedrock.BaseAzulException(internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)})
+        raise exceptions_bedrock.BaseAzulException(
+            internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)}
+        ) from e
 
 
 def _verify_user_is_admin(creds: UserInfo):
@@ -229,7 +236,7 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
             status_code=500,
             internal=ExceptionCodeEnum.TODO,
             parameters={"message": f"Failed to create PAT with inner exception {str(e)}."},
-        )
+        ) from e
     if resp.id != indexed_doc.get("_id"):
         raise exceptions_bedrock.ApiException(
             status_code=500,
@@ -297,6 +304,6 @@ async def delete_pat(id: str, creds: UserInfo = Depends(get_user_creds)):
             status_code=500,
             internal=ExceptionCodeEnum.TODO,
             parameters={"message": f"unexpected error {str(e)} occurred."},
-        )
+        ) from e
 
     return azm_pat.PATDeleteResponse(result=azm_pat.PATDeleteEnum.success)

@@ -23,10 +23,12 @@ classifiers=[
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
 ]
+# TODO - remove dev dependencies and metastore dependency
 dependencies = [
     "aiofiles>=0.6.0",
-    "azul-bedrock>=9.0.32",
-    "azul-security>=10.0.18",
+    "azul-bedrock>=10.0.33-dev4",
+    "azul-metastore>=10.0.42-dev8",
+    "azul-security>=10.0.19-dev3",
     "cachetools>=7.0.0",
     "click>=7.1.2",
     "fastapi>=0.128.0",
@@ -48,14 +50,14 @@ azul-restapi-server = "azul_restapi_server.cli:run"
 users = "azul_restapi_server.api.v1.users:router"
 pat = "azul_restapi_server.api.v1.pat_api:router"
 
+[[tool.uv.index]]
+url = "https://devpi.acsc.internal/azul/stable/+simple"
+default = true
+
 
 [project.urls]
 Documentation = "https://australiancybersecuritycentre.github.io/azul/"
 Repository = "https://github.com/AustralianCyberSecurityCentre/azul-restapi-server"
-
-[[tool.uv.index]]
-url = "https://pypi.org/simple"
-default = true
 
 [tool.hatch.version]
 source = "vcs"

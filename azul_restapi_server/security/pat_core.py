@@ -5,7 +5,8 @@ import datetime
 from threading import RLock
 
 import cachetools
-from azul_bedrock import datastore, exceptions_bedrock
+import jwt
+from azul_bedrock import exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
 from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
 from azul_bedrock.models_restapi import pat as azm_pat
@@ -15,18 +16,16 @@ from azul_restapi_server import settings
 from azul_restapi_server.api.v1.pat_api import _get_opensearch_session, get_os_settings
 
 PAT_CACHE_SIZE = 100
-
-
-import jwt
-from azul_metastore.encoders import base_encoder
+S_ANY = "s-any"
 
 # This pre-shared secret matches the provided docker-compose Opensearch cluster for local testing.
-_SECRET = "secret.secret.secret.secret.secret.secret."
+# TODO - replace this with an environment variable.
+_SECRET = "secret.secret.secret.secret.secret.secret."  # noqa: S105
 
 
 def _gen_opensearch_jwt(roles: list[str], user: str):
     """Generate a tests jwt token using a preshared secret."""
-    roles.append(base_encoder.S_ANY)
+    roles.append(S_ANY)
     return jwt.encode(
         {
             "roles": roles,
