@@ -37,6 +37,7 @@ dependencies = [
     "prometheus-client==0.24.1",
     "pwdlib[argon2]>=0.3.0",
     "pydantic-settings==2.13.1",
+    "pyjwt>=2.11.0",
     "pynacl==1.6.2",
     "python-jose[cryptography]==3.5.0",
     "python-multipart==0.0.22",
@@ -74,7 +75,6 @@ dev = [
     "cart>=1.2.3",
     "httpretty>=1.1.4",
     "httpx>=0.28.1",
-    "pyjwt>=2.11.0",
     "pytest>=9.0.2",
     "tox>=4.34.1",
 ]
