@@ -6,21 +6,19 @@ from threading import RLock
 
 import cachetools
 import jwt
-from azul_bedrock import exceptions_bedrock
+from azul_bedrock import datastore, exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
 from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
 from azul_bedrock.models_restapi import pat as azm_pat
+from azul_bedrock.settings import get_opensearch as get_os_settings
+from pwdlib import PasswordHash
+from pwdlib.hashers.argon2 import Argon2Hasher
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
 
 from azul_restapi_server import settings
-from azul_restapi_server.api.v1.pat_api import _get_opensearch_session, get_os_settings
 
 PAT_CACHE_SIZE = 100
 S_ANY = "s-any"
-
-# This pre-shared secret matches the provided docker-compose Opensearch cluster for local testing.
-# TODO - replace this with an environment variable.
-_SECRET = "secret.secret.secret.secret.secret.secret."  # noqa: S105
 
 
 def _gen_opensearch_jwt(roles: list[str], user: str):
@@ -35,7 +33,7 @@ def _gen_opensearch_jwt(roles: list[str], user: str):
             "nbf": datetime.datetime.now() - datetime.timedelta(hours=1, minutes=2),
             "exp": datetime.datetime.now() + datetime.timedelta(hours=1, minutes=2),
         },
-        _SECRET,
+        get_os_settings().jwt_signing_secret,
         algorithm="HS256",
     )
 
@@ -59,6 +57,13 @@ def create_userinfo_for_pat(pat_metadata: azm_pat.PATView) -> UserInfo:
     )
 
 
+def hash_pat(pat: str) -> str:
+    """Hash a PAT with the recommended hasher for secure storage."""
+    # Recommended hasher at time of writing
+    password_hasher = PasswordHash(hashers=(Argon2Hasher(),))
+    return password_hasher.hash(pat)
+
+
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=PAT_CACHE_SIZE, ttl=settings.oidc.pat_cache_ttl), lock=RLock())
 def validate_pat(token: str) -> UserInfo:
     """Validate a PAT token and provide the associated user info."""
@@ -66,7 +71,7 @@ def validate_pat(token: str) -> UserInfo:
     decoded_str = decoded_bytes.decode()
     pat_name, pat_value = decoded_str.split(":", maxsplit=1)
 
-    os_session = _get_opensearch_session()
+    os_session = get_opensearch_pat_admin_session()
     response = os_session.search(
         index=get_os_settings().opensearch_azul_security_index,
         body={
@@ -74,7 +79,7 @@ def validate_pat(token: str) -> UserInfo:
                 "bool": {
                     "must": [
                         {"term": {"pat_name": pat_name}},
-                        {"term": {"pat": pat_value}},
+                        {"term": {"pat": hash_pat(pat_value)}},
                     ]
                 }
             },
@@ -101,3 +106,83 @@ def validate_pat(token: str) -> UserInfo:
         ) from None
 
     return create_userinfo_for_pat(pat_metadata)
+
+
+_template_settings = {
+    "index.mapping.total_fields.limit": 2000,
+    "number_of_shards": 1,
+    "number_of_replicas": 2,
+    "refresh_interval": "30s",
+    "analysis": {
+        "analyzer": {
+            "path": {"tokenizer": "hierarchy"},
+            "path_reversed": {"tokenizer": "hierarchy_reversed"},
+            "pathw": {"tokenizer": "hierarchyw"},
+            "pathw_reversed": {"tokenizer": "hierarchyw_reversed"},
+            "alphanumeric": {"tokenizer": "alphanumeric"},
+        },
+        "tokenizer": {
+            "hierarchy": {"type": "path_hierarchy", "delimiter": "/"},
+            "hierarchy_reversed": {
+                "type": "path_hierarchy",
+                "delimiter": "/",
+                "reverse": "true",
+            },
+            "hierarchyw": {"type": "path_hierarchy", "delimiter": "\\"},
+            "hierarchyw_reversed": {
+                "type": "path_hierarchy",
+                "delimiter": "\\",
+                "reverse": "true",
+            },
+            "alphanumeric": {
+                "type": "char_group",
+                "tokenize_on_chars": ["whitespace", "punctuation", "symbol"],
+            },
+        },
+    },
+}
+
+_index_mapping = {
+    "dynamic": "strict",
+    "properties": {
+        "pat_name": {"type": "keyword"},
+        "pat": {"type": "keyword"},
+        "owner_username": {"type": "keyword"},
+        "roles": {"type": "keyword"},
+        "creation_date": {"type": "date"},
+        "last_used_date": {"type": "date"},
+    },
+}
+
+
+def get_opensearch_pat_admin_session():
+    """Get an Opensearch session."""
+    return datastore.credentials_to_es(
+        Credentials(
+            unique=get_os_settings().opensearch_azul_security_username,
+            format=CredentialFormat.basic,
+            username=get_os_settings().opensearch_azul_security_username,
+            password=get_os_settings().opensearch_azul_security_password,
+        )
+    )
+
+
+def create_azul_security_index():
+    """Create the system level azul_security index."""
+    index_name = get_os_settings().opensearch_azul_security_index
+    template = {
+        "settings": _template_settings,
+        "mappings": _index_mapping,
+        "index_patterns": [index_name],
+    }
+    try:
+        # Create the Opensearch index if it doesn't exist
+        session = get_opensearch_pat_admin_session()
+        if not session.indices.exists(index=index_name):
+            session.indices.put_template(name=index_name, body=template, ignore=404)
+            session.indices.put_mapping(index=index_name, body=template["mappings"], ignore=404)
+            session.indices.create(index=index_name)
+    except Exception as e:
+        raise exceptions_bedrock.BaseAzulException(
+            internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)}
+        ) from e

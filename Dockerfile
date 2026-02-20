@@ -29,13 +29,13 @@ RUN uv pip install --system hatchling hatch-vcs
 # build package
 RUN cd /tmp/src && uv build . --out-dir /tmp/
 # install package
-RUN uv pip install --system \
+RUN uv pip install --prerelease=allow --system \
     --find-links /tmp/ \
     # Version specified to ensure the package that was just built is installed instead of a newer version of the package.
     azul-restapi-server==$(cd /tmp/src && hatchling version)
 
 COPY ./support/enabled_plugins.txt /tmp/plugins.txt
-RUN uv pip install --system \
+RUN uv pip install --prerelease=allow --system \
     -r /tmp/plugins.txt
 
 # If on dev branch, install dev versions of azul packages (locate packages)
