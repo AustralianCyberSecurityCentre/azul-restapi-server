@@ -26,7 +26,7 @@ classifiers=[
 # TODO - remove dev dependencies and metastore dependency
 dependencies = [
     "aiofiles==25.1.0",
-    "azul-bedrock==10.0.33-dev4",
+    "azul-bedrock==10.0.33-dev5",
     "azul-metastore==10.0.42-dev8",
     "azul-security==10.0.19-dev3",
     "cachetools==7.0.1",

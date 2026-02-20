@@ -47,8 +47,5 @@ async def validate_token(
     # If no API key or oauth token user isn't authenticated.
     raise exceptions_bedrock.ApiException(
         status_code=HTTP_401_UNAUTHORIZED,
-        internal=ExceptionCodeEnum.TODO,
-        parameters={
-            "message": "Not authenticated, must provided a header 'Authorization: Bearer <bearer>' or 'X-API-Key: <api-key-value>"
-        },
+        internal=ExceptionCodeEnum.RestapiOidcNoAuthProvided,
     )

@@ -40,7 +40,10 @@ def get_user_creds(request: Request) -> UserInfo:
         return user_info_parsed
     except AttributeError as e:
         raise exceptions_bedrock.BaseAzulException(
-            internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)}
+            internal=ExceptionCodeEnum.RestapiFailedToGetUserCredentials,
+            parameters={
+                "inner_exception": str(e),
+            },
         ) from e
 
 
@@ -77,11 +80,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         if role not in creds.roles:
             raise exceptions_bedrock.ApiException(
                 status_code=HTTP_400_BAD_REQUEST,
-                internal=ExceptionCodeEnum.TODO,
-                parameters={
-                    "message": f"You do not have the provided role '{role}' (it may not exist)."
-                    + f" You can only give the PAT roles you have access to these are [{user_allowed_roles_string}]"
-                },
+                internal=ExceptionCodeEnum.RestapiCreatePatUserDoesntHaveRolesToAssignToPAT,
+                parameters={"role": role, "user_allowed_roles_string": user_allowed_roles_string},
             )
 
     # Verify PAT doesn't get admin roles
@@ -89,17 +89,9 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         admin_roles = ",".join([r for r in creds.roles if r in admin.get_settings().admin_roles])
         raise exceptions_bedrock.ApiException(
             status_code=HTTP_400_BAD_REQUEST,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={
-                "message": f"Cannot provide a PAT with the administrator roles [{admin_roles}]."
-                + f" You can only give the PAT roles you have access to these are [{user_allowed_roles_string}]"
-            },
+            internal=ExceptionCodeEnum.RestapiCreatePatCantGetAdminResults,
+            parameters={"admin_roles": admin_roles, "user_allowed_roles_string": user_allowed_roles_string},
         )
-    # Verify PAT has minimum required access
-    # admin.get_settings().minimum_required_access
-    # _required_access
-    # sec.minimum_required_access
-
     # Generate PAT
     opensearch_access = pat_core.get_opensearch_pat_admin_session()
     generated_pat = generate_pat()
@@ -128,10 +120,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         missing_labels = ",".join(missing_labels)
         raise exceptions_bedrock.ApiException(
             status_code=HTTP_400_BAD_REQUEST,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={
-                "message": f"Provided roles don't encompass the minimum required access missing [{missing_labels}]."
-            },
+            internal=ExceptionCodeEnum.RestapiCreatePatDoesntHaveMinimumRequiredAccess,
+            parameters={"missing_labels": missing_labels},
         )
 
     body = {
@@ -145,8 +135,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
     if opensearch_access.exists(index=get_os_settings().opensearch_azul_security_index, id=resp.id):
         raise exceptions_bedrock.ApiException(
             status_code=HTTP_400_BAD_REQUEST,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={"message": f"PAT with id {resp.id} already exists in Opensearch."},
+            internal=ExceptionCodeEnum.RestapiCreatePatAlreadyExists,
+            parameters={"pat_id": resp.id},
         )
 
     try:
@@ -159,16 +149,14 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
     except Exception as e:
         raise exceptions_bedrock.ApiException(
             status_code=500,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={"message": f"Failed to create PAT with inner exception {str(e)}."},
+            internal=ExceptionCodeEnum.RestapiCreatePatFailedToStorePAT,
+            parameters={"inner_exception": str(e)},
         ) from e
     if resp.id != indexed_doc.get("_id"):
         raise exceptions_bedrock.ApiException(
             status_code=500,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={
-                "message": f"The creation of the PAT did not result in the expected id, actual id {indexed_doc.get('_id')} != {resp.id} (expected)"
-            },
+            internal=ExceptionCodeEnum.RestapiCreatePatCreatedPATMissingId,
+            parameters={"indexed_doc_id": indexed_doc.get("_id"), "actual_id": resp.id},
         )
 
     return resp
@@ -227,8 +215,8 @@ async def delete_pat(id: str, creds: UserInfo = Depends(get_user_creds)):
     except Exception as e:
         raise exceptions_bedrock.ApiException(
             status_code=500,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={"message": f"unexpected error {str(e)} occurred."},
+            internal=ExceptionCodeEnum.RestapiDeletePATUnexpected,
+            parameters={"inner_exception": str(e)},
         ) from e
 
     return azm_pat.PATDeleteResponse(result=azm_pat.PATDeleteEnum.success)

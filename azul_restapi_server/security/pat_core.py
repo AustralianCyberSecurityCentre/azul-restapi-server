@@ -88,8 +88,7 @@ def validate_pat(token: str) -> UserInfo:
     if response.get("hits", {}).get("total", {}).get("value", 0) != 1:
         raise exceptions_bedrock.ApiException(
             status_code=HTTP_401_UNAUTHORIZED,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={"message": "The provided PAT is invalid or expired."},
+            internal=ExceptionCodeEnum.RestapiPatExpiredOrInvalidPAT,
         )
 
     try:
@@ -101,8 +100,7 @@ def validate_pat(token: str) -> UserInfo:
     except Exception:
         raise exceptions_bedrock.ApiException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            internal=ExceptionCodeEnum.TODO,
-            parameters={"message": "PAT was authorised but is missing expected data in the databased."},
+            internal=ExceptionCodeEnum.RestapiValidPATSerialisationFailure,
         ) from None
 
     return create_userinfo_for_pat(pat_metadata)
@@ -184,5 +182,5 @@ def create_azul_security_index():
             session.indices.create(index=index_name)
     except Exception as e:
         raise exceptions_bedrock.BaseAzulException(
-            internal=ExceptionCodeEnum.TODO, parameters={"message": str(e)}
+            internal=ExceptionCodeEnum.RestapiFailedToCreateSecurityIndex, parameters={"inner_exception": str(e)}
         ) from e
