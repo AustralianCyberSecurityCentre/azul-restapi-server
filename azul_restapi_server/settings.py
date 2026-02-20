@@ -84,6 +84,7 @@ class Logging(BaseSettings):
         "name=<cyan>{name}</cyan> function=<cyan>{function}</cyan> {message}"
     )
     log_level: str = "info"
+    excluded_loggers: list[str] = ["opensearch", "opensearchpy.trace", "opensearchpy"]
     log_retention: str = "1 months"
     log_rotation: str = "daily"
     log_backtrace: bool = False

@@ -90,4 +90,6 @@ class RestAPILogger:
         handler = InterceptHandler()
         logging.basicConfig(handlers=[handler], level=0)
         for name in logging.root.manager.loggerDict:
+            if name in config.excluded_loggers:
+                continue
             logging.getLogger(name).handlers = [handler]
