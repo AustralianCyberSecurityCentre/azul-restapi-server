@@ -6,6 +6,7 @@ import click
 import uvicorn
 
 from azul_restapi_server import settings
+from azul_restapi_server.security import pat_core
 
 # always show default
 click.option = partial(click.option, show_default=True)
@@ -21,6 +22,10 @@ def run(host, port, workers, reload):
     headers: list[str, str] = []
     for header_label, header_val in settings.restapi.headers.items():
         headers.append((header_label.strip(), header_val.strip()))
+
+    # Create the security index if PAT auth is enabled.
+    if settings.Restapi().is_pat_enabled:
+        pat_core.create_azul_security_index()
 
     # access log is disabled, as we are using our own middleware to log access
     uvicorn.run(

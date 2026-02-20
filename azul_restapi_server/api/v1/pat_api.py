@@ -15,15 +15,10 @@ from fastapi import APIRouter, Depends, Request
 from opensearchpy import exceptions as opensearchpy_exceptions
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 
-from azul_restapi_server import settings as restapi_settings
 from azul_restapi_server.security import pat_core
 
 MAX_PATS_PER_REQUEST = 10000
 PASSWORD_ALPHABET = string.ascii_letters + string.digits
-
-# Create the security index if PAT auth is enabled.
-if restapi_settings.Restapi().is_pat_enabled:
-    pat_core.create_azul_security_index()
 
 
 def generate_pat(pat_length: int = 64) -> str:
@@ -71,7 +66,12 @@ def _verify_user_is_admin(creds: UserInfo):
     },
 )
 async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(get_user_creds)):
-    """Create a PAT for a user and store it in Opensearch."""
+    """Create a PAT for a user and store it in Opensearch.
+
+    To use the PAT put the ready_api_key in a header {"X-API-Key": <ready-api-key>}
+    The ready api key is a base64 encoding of the "pat_id:pat_value"
+    e.g: base64.b64encode(<pat-id>:<pat>)
+    """
     _verify_user_is_admin(creds)
     # Verify the provided roles are valid for the current user to assign.
     allowed_roles = [r for r in creds.roles if r not in admin.get_settings().admin_roles]
@@ -98,14 +98,12 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
     opensearch_access = pat_core.get_opensearch_pat_admin_session()
     generated_pat = generate_pat()
 
-    ready_api_key = f"{request_pat.name}:{generated_pat}".encode()
-    ready_api_key = base64.b64encode(ready_api_key)
-
     resp = azm_pat.PATIssue(
-        id=f"{request_pat.name}.{creds.username}",
+        id=generate_pat(20),  # using a mini-pat as a random temporary id before opensearch issues one.
         pat=generated_pat,
-        ready_api_key=ready_api_key.decode(),
+        ready_api_key="",
         pat_name=request_pat.name,
+        description=request_pat.description,
         roles=request_pat.roles,
         owner_username=creds.username,
         creation_date=datetime.datetime.now(tz=datetime.UTC),
@@ -126,26 +124,42 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
             parameters={"missing_labels": missing_labels},
         )
 
+    # check if user already has a pat with the provided name
+    already_exists_response = opensearch_access.search(
+        index=get_os_settings().opensearch_azul_security_index,
+        body={
+            "query": {
+                "bool": {
+                    "must": [
+                        {"term": {"pat_name": resp.pat_name}},
+                        {"term": {"owner_username": resp.owner_username}},
+                    ]
+                }
+            },
+        },
+    )
+    if already_exists_response.get("hits", {}).get("total", {}).get("value", 1) != 0:
+        raise exceptions_bedrock.ApiException(
+            status_code=HTTP_400_BAD_REQUEST,
+            internal=ExceptionCodeEnum.RestapiCreatePatAlreadyExists,
+            parameters={"pat_name": resp.pat_name},
+        )
+
     body = {
+        # no id, allow opensearch to generate it.
         "pat_name": resp.pat_name,
+        "description": resp.description,
         "pat": pat_core.hash_pat(resp.pat),
         "roles": request_pat.roles,
         "owner_username": resp.owner_username,
         "creation_date": resp.creation_date,
         "last_used_date": resp.last_used_date,
     }
-    if opensearch_access.exists(index=get_os_settings().opensearch_azul_security_index, id=resp.id):
-        raise exceptions_bedrock.ApiException(
-            status_code=HTTP_400_BAD_REQUEST,
-            internal=ExceptionCodeEnum.RestapiCreatePatAlreadyExists,
-            parameters={"pat_id": resp.id},
-        )
 
     try:
         indexed_doc = opensearch_access.index(
             index=get_os_settings().opensearch_azul_security_index,
             body=body,
-            id=resp.id,
             refresh=True,
         )
     except Exception as e:
@@ -154,13 +168,15 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
             internal=ExceptionCodeEnum.RestapiCreatePatFailedToStorePAT,
             parameters={"inner_exception": str(e)},
         ) from e
-    if resp.id != indexed_doc.get("_id"):
+
+    if not indexed_doc.get("_id"):
         raise exceptions_bedrock.ApiException(
             status_code=500,
             internal=ExceptionCodeEnum.RestapiCreatePatCreatedPATMissingId,
-            parameters={"indexed_doc_id": indexed_doc.get("_id"), "actual_id": resp.id},
         )
-
+    resp.id = indexed_doc.get("_id")
+    ready_api_key = base64.b64encode(f"{resp.id}:{generated_pat}".encode())
+    resp.ready_api_key = ready_api_key.decode()
     return resp
 
 
@@ -185,6 +201,7 @@ async def list_pats(creds: UserInfo = Depends(get_user_creds)):
             "_source": {"excludes": "pat"},
             "size": MAX_PATS_PER_REQUEST,
         },
+        ignore=[404],
     )
     current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
     results: list[azm_pat.PATView] = []
