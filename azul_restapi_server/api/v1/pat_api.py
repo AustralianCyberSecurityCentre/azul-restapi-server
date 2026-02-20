@@ -15,13 +15,15 @@ from fastapi import APIRouter, Depends, Request
 from opensearchpy import exceptions as opensearchpy_exceptions
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 
+from azul_restapi_server import settings as restapi_settings
 from azul_restapi_server.security import pat_core
 
 MAX_PATS_PER_REQUEST = 10000
 PASSWORD_ALPHABET = string.ascii_letters + string.digits
 
-# Create the security index at import time.
-pat_core.create_azul_security_index()
+# Create the security index if PAT auth is enabled.
+if restapi_settings.Restapi().is_pat_enabled:
+    pat_core.create_azul_security_index()
 
 
 def generate_pat(pat_length: int = 64) -> str:
