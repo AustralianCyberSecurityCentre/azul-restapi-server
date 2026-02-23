@@ -95,7 +95,6 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
             parameters={"admin_roles": admin_roles, "user_allowed_roles_string": user_allowed_roles_string},
         )
     # Generate PAT
-    opensearch_access = pat_core.get_opensearch_pat_admin_session()
     generated_pat = generate_pat()
 
     resp = azm_pat.PATIssue(
@@ -124,6 +123,7 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
             parameters={"missing_labels": missing_labels},
         )
 
+    opensearch_access = pat_core.get_opensearch_pat_admin_session()
     # check if user already has a pat with the provided name
     already_exists_response = opensearch_access.search(
         index=get_os_settings().opensearch_azul_security_index,
@@ -203,6 +203,7 @@ async def list_pats(creds: UserInfo = Depends(get_user_creds)):
         },
         ignore=[404],
     )
+
     current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
     results: list[azm_pat.PATView] = []
 

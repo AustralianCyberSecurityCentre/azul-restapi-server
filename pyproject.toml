@@ -23,12 +23,10 @@ classifiers=[
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
 ]
-# TODO - remove dev dependencies and metastore dependency
 dependencies = [
     "aiofiles==25.1.0",
-    "azul-bedrock==10.0.33-dev10",
-    "azul-metastore==10.0.42-dev8",
-    "azul-security==10.0.19-dev3",
+    "azul-bedrock>=10.0.33",
+    "azul-security>=10.0.20",
     "cachetools==7.0.1",
     "click==8.3.1",
     "fastapi==0.129.0",
