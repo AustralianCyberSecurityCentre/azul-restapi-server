@@ -136,6 +136,10 @@ class FakeOpensearch:
         else:
             raise Exception(f"Unexpected body for opensearch search {body}")
 
+    def update(self, *, body: dict, index: str, ignore: list[str] = [], **kwargs):
+        """Mock update which is used to update last modified date."""
+        pass
+
     def delete(self, *, index, id) -> dict:
         """Mock for deleting ids from index in opensearch."""
         if id in self.stored_pats:

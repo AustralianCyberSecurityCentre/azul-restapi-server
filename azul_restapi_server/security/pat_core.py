@@ -104,6 +104,12 @@ def validate_pat(token: str) -> UserInfo:
             internal=ExceptionCodeEnum.RestapiValidPATSerialisationFailure,
         ) from e
     if validate_password_hash(pat_value, pat_issue.pat):
+        os_session.update(
+            index=get_os_settings().opensearch_azul_security_index,
+            id=pat_id,
+            body={"doc": {"last_used_date": datetime.datetime.now(tz=datetime.UTC)}},
+        )
+
         return create_userinfo_for_pat(pat_view)
 
     raise exceptions_bedrock.ApiException(
