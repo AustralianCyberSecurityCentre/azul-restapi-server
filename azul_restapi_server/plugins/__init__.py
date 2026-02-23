@@ -19,6 +19,7 @@ import importlib.metadata
 from azul_bedrock.exceptions_bedrock import BaseError
 from fastapi import APIRouter, Depends
 
+from azul_restapi_server import settings
 from azul_restapi_server.security import validate_token
 
 
@@ -30,6 +31,9 @@ def get_router():
     )
     router = APIRouter()
     for name, plugin in plugins:
+        if name == "pat" and not settings.restapi.is_pat_enabled:
+            print("Skipped loading plugin pat, because pat isn't enabled.")
+            continue
         print(f"loaded plugin: {name}")
         router.include_router(
             plugin,

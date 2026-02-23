@@ -6,7 +6,7 @@ from typing import Dict
 
 import cachetools
 import httpx
-from azul_bedrock.models_auth import Credentials, UserInfo
+from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
 from fastapi import HTTPException
 from jose import exceptions as jwt_exceptions
 from jose import jwt
@@ -102,5 +102,5 @@ def validate(token: str, audience: str) -> UserInfo:
             headers={"WWW-Authenticate": "Bearer"},
         ) from e
     user_info = claims_to_user(claims)
-    user_info.credentials = Credentials(unique=user_info.unique_id, format="oauth", token=token)
+    user_info.credentials = Credentials(unique=user_info.unique_id, format=CredentialFormat.oauth, token=token)
     return user_info

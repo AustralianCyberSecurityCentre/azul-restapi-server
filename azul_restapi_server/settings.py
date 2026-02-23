@@ -1,7 +1,9 @@
 """Pydantic settings for common restapi options."""
 
 import os
+from enum import StrEnum
 
+from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,6 +25,7 @@ class OIDC(BaseSettings):
     roles_key: str = "roles"
     username_key: str = "preferred_username"
     cache_ttl: int = 600
+    pat_cache_ttl: int = 60 * 60 * 24
     swagger_redirect_url: str = "/api/oauth2-redirect"
     model_config = SettingsConfigDict(env_prefix="oidc_")
 
@@ -37,6 +40,15 @@ class Cors(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="cors_")
 
 
+class RestapiSecurityEnum(StrEnum):
+    """Options for the security field in restapi."""
+
+    none = "none"
+    oidc_legacy = "oidc_legacy"
+    oidc = "oidc"
+    oidc_pat = "oidc_pat"
+
+
 class Restapi(BaseSettings):
     """Settings for restapi specific bindings."""
 
@@ -47,9 +59,20 @@ class Restapi(BaseSettings):
     reload: bool = False
     prefix: str = "/api"
     root_path: str = "/"
-    security: str = "none"
+    security: RestapiSecurityEnum = RestapiSecurityEnum.none
     headers: dict[str, str] = dict()
     model_config = SettingsConfigDict(env_prefix="restapi_")
+
+    @computed_field
+    @property
+    def is_pat_enabled(self) -> bool:
+        """Field that returns true if PAT api should be enabled.
+
+        It should be enabled if the API supports PAT (api key) authentication.
+        """
+        if self.security == RestapiSecurityEnum.oidc_pat:
+            return True
+        return False
 
 
 class Logging(BaseSettings):
@@ -61,6 +84,7 @@ class Logging(BaseSettings):
         "name=<cyan>{name}</cyan> function=<cyan>{function}</cyan> {message}"
     )
     log_level: str = "info"
+    excluded_loggers: list[str] = ["opensearch", "opensearchpy.trace", "opensearchpy"]
     log_retention: str = "1 months"
     log_rotation: str = "daily"
     log_backtrace: bool = False

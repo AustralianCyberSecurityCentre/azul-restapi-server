@@ -2,13 +2,15 @@
 
 from .. import settings
 
-_provider_name = settings.restapi.security.lower()
+_provider_name = settings.restapi.security
 
-if _provider_name == "oidc":
+if _provider_name == settings.RestapiSecurityEnum.oidc_pat:
+    from . import oidc_pat_modern as security_source
+elif _provider_name == settings.RestapiSecurityEnum.oidc:
     from . import oidc_modern as security_source
-elif _provider_name == "oidc_legacy":
+elif _provider_name == settings.RestapiSecurityEnum.oidc_legacy:
     from . import oidc_legacy as security_source
-elif _provider_name == "none":
+elif _provider_name == settings.RestapiSecurityEnum.none:
     from . import no_auth as security_source
 else:
     raise Exception("unknown security provider")
