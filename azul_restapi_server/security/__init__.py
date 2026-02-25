@@ -13,6 +13,6 @@ elif _provider_name == settings.RestapiSecurityEnum.oidc_legacy:
 elif _provider_name == settings.RestapiSecurityEnum.none:
     from . import no_auth as security_source
 else:
-    raise Exception("unknown security provider")
+    raise Exception(f"unknown security provider {_provider_name}")
 
 validate_token = security_source.validate_token
