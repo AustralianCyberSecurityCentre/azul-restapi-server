@@ -20,6 +20,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse
 from starlette.staticfiles import StaticFiles
 from starlette_exporter import PrometheusMiddleware, handle_metrics
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from azul_restapi_server import settings
 
@@ -76,6 +77,7 @@ app.mount(
 )
 
 # This needs to go first in order to access unencoded bodies
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=["*"])
 app.add_middleware(AuditMiddleware)
 app.add_middleware(
     CORSMiddleware,
