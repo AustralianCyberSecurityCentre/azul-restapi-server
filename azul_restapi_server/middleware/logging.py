@@ -61,6 +61,13 @@ class AuditMiddleware:
         # add the username to the outgoing response
         message["headers"].append((b"X-Username", username.encode()))
 
+        print(f"Host:{message['headers'].get('Host')}")
+        print(f"X-Real-IP:{message['headers'].get('X-Real-IP')}")
+        print(f"X-Forwarded-For:{message['headers'].get('X-Forwarded-For')}")
+        print(f"X-Forwarded-Proto:{message['headers'].get('X-Forwarded-Proto')}")
+        print(message["headers"])
+        print(list(message["headers"].keys()))
+
         if request.client:
             req_host: s_datas.Address = request.client
         else:
