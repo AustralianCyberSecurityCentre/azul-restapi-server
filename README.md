@@ -21,11 +21,6 @@ entry_points={
 }
 ```
 
-### API Versioning
-
-API versioning is achieved by running multiple restapi-servers in parallel behind a reverse proxy/kubernetes ingress
-each configured with different plugin versions in the requirements.txt.
-
 ## Quickstart
 
 ### Install
