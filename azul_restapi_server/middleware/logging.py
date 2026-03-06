@@ -1,6 +1,7 @@
 """Provide audit for all requests."""
 
 import datetime
+import os
 import time
 from collections import namedtuple
 
@@ -85,6 +86,7 @@ class AuditMiddleware:
             duration_ms=duration_ms,
             duration_us=duration_us,
             security=security_label,
+            host_ip=os.environ.get("HOST_IP", "-"),
         )
 
         request.app.audit_logger.info(log_config.audit_format.format(**fmt_vars))
