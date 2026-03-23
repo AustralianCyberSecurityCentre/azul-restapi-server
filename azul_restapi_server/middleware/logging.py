@@ -67,6 +67,7 @@ class AuditMiddleware:
         else:
             req_host: s_datas.Address = s_datas.Address(host="localhost", port=5000)
         # define simple, optional vars for format string
+        # get action from route
         route_name = request.scope.get("route", None)
         action = route_name.name.replace("_", " ").title() if route_name else "-"
         fmt_vars = dict(
