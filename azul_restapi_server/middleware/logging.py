@@ -69,6 +69,7 @@ class AuditMiddleware:
         # define simple, optional vars for format string
         # get action from route
         route_name = request.scope.get("route", None)
+        print(f"DEBUG scope keys: {list(request.scope.keys())}, path={request.url.path}, route={route_name}, endpoint={request.scope.get('endpoint')}")
         action = route_name.name.replace("_", " ").title() if route_name else "-"
         fmt_vars = dict(
             action=action,
