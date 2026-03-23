@@ -27,7 +27,9 @@ class AuditMiddleware:
             return
         request = Request(scope, receive=receive)
         start_time = time.time()
-        await self.app(scope, receive, lambda x: self.sender(request, send, start_time, x))
+        await self.app(
+            scope, receive, lambda x: self.sender(request, send, start_time, x)
+        )
 
     async def sender(self, request: Request, send: Send, start_time, message: Message):
         """Perform logging of event."""
@@ -69,7 +71,9 @@ class AuditMiddleware:
         # define simple, optional vars for format string
         # get action from route
         route_name = request.scope.get("route", None)
-        print(f"DEBUG scope keys: {list(request.scope.keys())}, path={request.url.path}, route={route_name}, endpoint={request.scope.get('endpoint')}")
+        print(
+            f"DEBUG scope keys: {list(request.scope.keys())}, path={request.url.path}, route={route_name}, endpoint={request.scope.get('endpoint')}"
+        )
         action = route_name.name.replace("_", " ").title() if route_name else "-"
         fmt_vars = dict(
             action=action,
@@ -80,7 +84,8 @@ class AuditMiddleware:
             method=request.method,
             path=request.url.path,
             # Generic path that doesn't contain any parameters
-            generic_path=request.scope.get("root_path", "") + request.scope.get("route", UnknownPath("")).path,
+            generic_path=request.scope.get("root_path", "")
+            + request.scope.get("route", UnknownPath("")).path,
             status_code=message["status"],
             # allow fall back access to header for custom, 'x-' style values
             headers=request.headers,

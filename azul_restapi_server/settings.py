@@ -91,7 +91,7 @@ class Logging(BaseSettings):
     # get temp dir
     audit_file: str = os.path.join(os.getcwd(), "logs", "restapi-audit.log")
     audit_format: str = (
-        'full_time={time:%d/%b/%Y:%H:%M:%S.%f} client_ip={client_ip} client_port={client_port} '
+        "full_time={time:%d/%b/%Y:%H:%M:%S.%f} client_ip={client_ip} client_port={client_port} "
         'connection={connection} username={username} method={method} action="{action}" '
         'path={path} generic_path={generic_path} status={status_code} user_agent="{user_agent}" '
         'referer={referer} duration_ms={duration_ms} security="{security}" host_ip={host_ip}'
