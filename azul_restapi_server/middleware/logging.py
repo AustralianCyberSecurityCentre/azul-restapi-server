@@ -66,8 +66,12 @@ class AuditMiddleware:
             req_host: s_datas.Address = request.client
         else:
             req_host: s_datas.Address = s_datas.Address(host="localhost", port=5000)
+        # get action from route
+        route_name = request.scope.get("route", None)
+        action = route_name.name.replace("_", " ").title() if route_name else "-"
         # define simple, optional vars for format string
         fmt_vars = dict(
+            action=action,
             username=username,
             client_ip=req_host.host,
             client_port=req_host.port,
