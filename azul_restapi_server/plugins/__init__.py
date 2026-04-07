@@ -18,6 +18,7 @@ import importlib.metadata
 
 from azul_bedrock.exceptions_bedrock import BaseError
 from fastapi import APIRouter, Depends
+from settings import retrohunt
 
 from azul_restapi_server import settings
 from azul_restapi_server.security import validate_token
@@ -31,6 +32,10 @@ def get_router():
     )
     router = APIRouter()
     for name, plugin in plugins:
+        # don't install retrohunt if it is disabled
+        if name == "retrohunt" and not retrohunt.enabled:
+            print("Skipping retrohunt plugin")
+            continue
         if name == "pat" and not settings.restapi.is_pat_enabled:
             print("Skipped loading plugin pat, because pat isn't enabled.")
             continue

@@ -34,9 +34,13 @@ RUN uv pip install --system \
     # Version specified to ensure the package that was just built is installed instead of a newer version of the package.
     azul-restapi-server==$(cd /tmp/src && hatchling version)
 
-COPY ./support/enabled_plugins.txt /tmp/plugins.txt
-RUN uv pip install --system \
-    -r /tmp/plugins.txt
+#COPY ./support/enabled_plugins.txt /tmp/plugins.txt
+#RUN uv pip install --system \
+#    -r /tmp/plugins.txt
+# Discover plugin packages and install them
+RUN python support/list_plugins.py > /tmp/plugins.txt \
+    && uv pip install --system -r /tmp/plugins.txt
+
 
 # If on dev branch, install dev versions of azul packages (locate packages)
 # Note pip install --pre --upgrade --no-deps is not valid because it doesn't install the requirements of dev azul packages which are needed.
