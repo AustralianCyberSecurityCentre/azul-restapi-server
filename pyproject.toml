@@ -94,7 +94,9 @@ dev = [
     "httpretty>=1.1.4",
     "httpx>=0.28.1",
     "pytest>=9.0.2",
+    "ruff>=0.15.8",
     "tox>=4.34.1",
+    "ty>=0.0.27",
 ]
 plugins = [
     "azul-metastore>=11.0.41",
