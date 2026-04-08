@@ -19,15 +19,8 @@ import importlib.metadata
 from azul_bedrock.exceptions_bedrock import BaseError
 from fastapi import APIRouter, Depends
 
-try:
-    from settings import retrohunt
-except ModuleNotFoundError:
-    # fallback for CI or environments without external settings
-    from azul_restapi_server.settings import RetrohuntConfig
-
-    retrohunt = RetrohuntConfig()
-
 from azul_restapi_server import settings
+from azul_restapi_server.settings import retrohunt
 from azul_restapi_server.security import validate_token
 
 
