@@ -1,3 +1,2 @@
 fastapi # this is required due to pip dependency resolution and fastapi pinning it's own version of starlette
 azul-metastore
-azul-plugin-retrohunt

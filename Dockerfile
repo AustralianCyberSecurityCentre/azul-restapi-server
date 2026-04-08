@@ -38,8 +38,8 @@ COPY ./support/enabled_plugins.txt /tmp/plugins.txt
 RUN uv pip install --system \
     -r /tmp/plugins.txt
 # Discover plugin packages and install them
-# RUN python support/list_plugins.py > /tmp/plugins.txt \
-#    && uv pip install --system -r /tmp/plugins.txt
+RUN python support/list_plugins.py > /tmp/plugins.txt \
+    && uv pip install --system -r /tmp/plugins.txt
 
 
 # If on dev branch, install dev versions of azul packages (locate packages)
