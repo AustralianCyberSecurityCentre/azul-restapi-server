@@ -20,8 +20,8 @@ from azul_bedrock.exceptions_bedrock import BaseError
 from fastapi import APIRouter, Depends
 
 from azul_restapi_server import settings
-from azul_restapi_server.settings import retrohunt
 from azul_restapi_server.security import validate_token
+from azul_restapi_server.settings import retrohunt
 
 
 def get_router():
