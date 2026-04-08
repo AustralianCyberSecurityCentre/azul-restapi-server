@@ -34,20 +34,12 @@ RUN uv pip install --system \
     # Version specified to ensure the package that was just built is installed instead of a newer version of the package.
     azul-restapi-server==$(cd /tmp/src && hatchling version)
 
-COPY ./support/enabled_plugins.txt /tmp/plugins.txt
-RUN uv pip install --system \
-    -r /tmp/plugins.txt
-# Discover plugin packages and install them
-COPY ./support/list_plugins.py /support/list_plugins.py
-RUN python /support/list_plugins.py > /tmp/plugins.txt \
-    && uv pip install --system -r /tmp/plugins.txt
-
-
+RUN uv pip install --system --group plugins
 
 # If on dev branch, install dev versions of azul packages (locate packages)
 # Note pip install --pre --upgrade --no-deps is not valid because it doesn't install the requirements of dev azul packages which are needed.
 RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ] ; then \
-    pip freeze | grep 'azul-.*==' | cut -d "=" -f 1 | xargs -I {} uv pip install --system --find-links /tmp/ --upgrade '{}>=0.0.1.dev' ;fi
+    pip freeze | grep 'azul-.*==' | cut -d "=" -f 1 | xargs -I {} uv pip install --system --find-links /tmp/ --upgrade --prerelease allow '{}>=0.0.1.dev' ;fi
 # re-run install sdist to get correct version of current package after dev install.
 RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ] ; then \
     uv pip install --system --find-links /tmp/ azul-restapi-server==$(cd /tmp/src && hatchling version);fi

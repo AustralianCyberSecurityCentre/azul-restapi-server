@@ -77,6 +77,10 @@ dev = [
     "pytest>=9.0.2",
     "tox>=4.34.1",
 ]
+plugins = [
+    "azul-metastore>=11.0.41",
+    "azul-plugin-retrohunt>=11.0.0",
+]
 
 [tool.ruff]
 # formatter config
