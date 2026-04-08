@@ -64,6 +64,11 @@ azul-security = { index="cache"}
 azul-nsrl-lookup-server = { index="cache"}
 azul-plugin-retrohunt = { index="cache" }
 
+
+[project.urls]
+Documentation = "https://australiancybersecuritycentre.github.io/azul/"
+Repository = "https://github.com/AustralianCyberSecurityCentre/azul-restapi-server"
+
 [[tool.uv.index]]
 name = "pypi"
 url = "https://pypi.org/simple"
@@ -73,11 +78,6 @@ default = true
 name = "cache"
 url = "https://devpi.acsc.internal/azul/stable/"
 explicit = true
-
-
-[project.urls]
-Documentation = "https://australiancybersecuritycentre.github.io/azul/"
-Repository = "https://github.com/AustralianCyberSecurityCentre/azul-restapi-server"
 
 [tool.hatch.version]
 source = "vcs"
@@ -95,6 +95,9 @@ dev = [
     "httpx>=0.28.1",
     "pytest>=9.0.2",
     "tox>=4.34.1",
+]
+plugins = [
+    "azul-metastore>=11.0.41",
 ]
 
 [tool.ruff]
