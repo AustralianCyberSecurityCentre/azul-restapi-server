@@ -38,8 +38,8 @@ COPY ./support/enabled_plugins.txt /tmp/plugins.txt
 RUN uv pip install --system \
     -r /tmp/plugins.txt
 # Discover plugin packages and install them
-RUN python support/list_plugins.py > /tmp/plugins.txt \
-    && uv pip install --system -r /tmp/plugins.txt
+# RUN python support/list_plugins.py > /tmp/plugins.txt \
+#    && uv pip install --system -r /tmp/plugins.txt
 
 
 # If on dev branch, install dev versions of azul packages (locate packages)
@@ -82,13 +82,6 @@ ARG PIP_INDEX_URL
 ARG UV_DEFAULT_INDEX
 ARG UV_INSECURE_HOST
 ARG PIP_EXTRA_INDEX_URL
-ENV PIP_INDEX_URL=$PIP_INDEX_URL
-ENV PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL
-ENV UV_DEFAULT_INDEX=$UV_DEFAULT_INDEX
-ENV UV_INSECURE_HOST=$UV_INSECURE_HOST
-ENV PIP_CERT=$PIP_CERT
-ENV PIP_CLIENT_CERT=$PIP_CLIENT_CERT
-ENV PIP_TRUSTED_HOST=$PIP_TRUSTED_HOST
 
 ARG UID=21000
 ARG GID=21000
