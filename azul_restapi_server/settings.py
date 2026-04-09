@@ -60,8 +60,8 @@ class RetrohuntConfig(BaseSettings):
     cleanup_running_delay: int = 0
     ttl: int = 0
     exception_wait: int = 0
-    username: str = Field(env="REDIS_USERNAME")
-    password: str = Field(env="REDIS_PASSWORD")
+    username: str = Field(default="", env="REDIS_USERNAME")
+    password: str = Field(default="", env="REDIS_PASSWORD")
 
     model_config = SettingsConfigDict(env_prefix="RETROHUNT_")
 
