@@ -98,9 +98,7 @@ dev = [
     "tox>=4.34.1",
     "ty>=0.0.27",
 ]
-plugins = [
-    "azul-metastore>=11.0.41",
-]
+
 plugins = [
     "azul-metastore>=11.0.41",
     "azul-plugin-retrohunt>=11.0.0",
