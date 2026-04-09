@@ -34,6 +34,7 @@ RUN uv pip install --system \
     # Version specified to ensure the package that was just built is installed instead of a newer version of the package.
     azul-restapi-server==$(cd /tmp/src && hatchling version)
 
+COPY ./pyproject.toml ./pyproject.toml
 RUN uv pip install --system --group plugins
 
 # If on dev branch, install dev versions of azul packages (locate packages)
