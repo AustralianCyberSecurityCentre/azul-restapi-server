@@ -91,6 +91,7 @@ class AuditMiddleware:
             duration_us=duration_us,
             security=security_label,
             host_ip=os.environ.get("HOST_IP", "-"),
+            query_string=f' query_string="{request.url.query}"' if request.url.query else "",
         )
 
         request.app.audit_logger.info(log_config.audit_format.format(**fmt_vars))
