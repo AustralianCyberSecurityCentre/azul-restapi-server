@@ -34,10 +34,10 @@ RUN pip install uv
 
 # build and install package
 WORKDIR /tmp/src
-# Install all dependencies
-RUN uv sync --frozen --no-editable
 # Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
 RUN uv pip install --system hatchling hatch-vcs
+# Install all dependencies
+RUN uv sync --frozen --no-editable
 RUN uv build . --out-dir /tmp/
 RUN uv pip uninstall --system azul-restapi-server
 RUN uv pip install --system --no-deps --find-links /tmp/ azul-restapi-server==$(hatchling version)
