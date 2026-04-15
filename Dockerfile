@@ -36,14 +36,13 @@ RUN pip install uv
 WORKDIR /tmp/src
 # Install all dependencies
 RUN uv sync --frozen --no-editable
-# Install additional plugin based dependencies
-RUN uv pip install --system --group plugins
 # Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
 RUN uv pip install --system hatchling hatch-vcs
 RUN uv build . --out-dir /tmp/
 RUN uv pip uninstall --system azul-restapi-server
 RUN uv pip install --system --no-deps --find-links /tmp/ azul-restapi-server==$(hatchling version)
-
+# Install additional plugin based dependencies
+RUN uv pip install --system --group plugins
 # Upgrade to dev azul dependencies or upgrade non-dev azul dependencies depending on branch.
 RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow '{}>=0.0.0-dev'; \
