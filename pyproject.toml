@@ -54,7 +54,7 @@ pat = "azul_restapi_server.api.v1.pat_api:router"
 [tool.uv]
 package = true
 exclude-newer = "1 week"
-exclude-newer-package = { azul-bedrock = false, azul-runner = false, azul-security=false, azul-metastore = false, azul-nsrl-lookup-serve=false, azul-nsrl-lookup-server=false, azul-plugin-retrohunt = false }
+exclude-newer-package = { azul-bedrock = false, azul-runner = false, azul-security=false, azul-metastore = false, azul-nsrl-lookup-serve=false, azul-nsrl-lookup-server=false, azul-plugin-retrohunt = false, malpz=false }
 
 [tool.uv.sources]
 azul-bedrock = { index="cache"}
@@ -63,6 +63,7 @@ azul-metastore = { index="cache"}
 azul-security = { index="cache"}
 azul-nsrl-lookup-server = { index="cache"}
 azul-plugin-retrohunt = { index="cache" }
+malpz = { index="cache" }
 
 
 [project.urls]
@@ -99,7 +100,7 @@ dev = [
     "ty>=0.0.27",
 ]
 plugins = [
-    "azul-metastore>=11.0.41",
+    "azul-metastore>=11.0.61",
 ]
 
 [tool.ruff]
