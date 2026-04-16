@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-09T00:51:21.40950357Z"
+exclude-newer = "2026-04-09T12:03:55.459627152Z"
 exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
@@ -726,7 +726,7 @@ wheels = [
 [[package]]
 name = "malpz"
 version = "11.0.6"
-source = { registry = "https://devpi.acsc.internal/azul/stable" }
+source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 wheels = [
     { url = "https://devpi.acsc.internal/azul/stable/+f/12a/f94c82cd94da8/malpz-11.0.6-py3-none-any.whl", hash = "sha256:12af94c82cd94da853a3cbdc52b38a20865d9093fabeee9bc28480f6465d354c" },
 ]
