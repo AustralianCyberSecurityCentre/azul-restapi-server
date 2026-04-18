@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-11T14:03:29.82602993Z"
+exclude-newer = "2026-04-11T14:43:36.157477373Z"
 exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "11.0.43"
+version = "11.0.45"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,7 +123,7 @@ dependencies = [
     { name = "yara-python" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/fc0/c5c27a2ed8f8f/azul_bedrock-11.0.43-py3-none-any.whl", hash = "sha256:fc0c5c27a2ed8f8fe29c9109f9216af8337f557e4d6c29bd9c363bf2fac33368" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/fa0/92eceeb0d624e/azul_bedrock-11.0.45-py3-none-any.whl", hash = "sha256:fa092eceeb0d624e1a21623f2b7d6894222e3f1faf2e56cff27367ab3a38d152" },
 ]
 
 [[package]]
