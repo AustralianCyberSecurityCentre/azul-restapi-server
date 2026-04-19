@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-11T21:46:35.815398598Z"
+exclude-newer = "2026-04-12T12:04:53.914397639Z"
 exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "11.0.54"
+version = "11.0.58"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,12 +123,12 @@ dependencies = [
     { name = "yara-python" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/dec/8e522983842e4/azul_bedrock-11.0.54-py3-none-any.whl", hash = "sha256:dec8e522983842e41f049305f19901e2a248579547ece29d813cd9b52b2ad66e" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/a12/cdce903037dfa/azul_bedrock-11.0.58-py3-none-any.whl", hash = "sha256:a12cdce903037dfa677f7755605697c012ed035b2647e5236c0eff46c573121e" },
 ]
 
 [[package]]
 name = "azul-metastore"
-version = "11.0.81"
+version = "11.0.90"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,7 +153,7 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/b1a/04f601cc902e4/azul_metastore-11.0.81-py3-none-any.whl", hash = "sha256:b1a04f601cc902e426d3512d64a5015f9a1f6add744721fef65fc8021e54d1ac" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/06f/381436bbfe9e5/azul_metastore-11.0.90-py3-none-any.whl", hash = "sha256:06f381436bbfe9e52760f79b7e5183e66be2b311b467ce9c04b83fd945caa4d5" },
 ]
 
 [[package]]
@@ -230,7 +230,7 @@ plugins = [{ name = "azul-metastore", specifier = ">=11.0.61", index = "https://
 
 [[package]]
 name = "azul-security"
-version = "11.0.25"
+version = "11.0.31"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -239,7 +239,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/9e4/8f24d88145acd/azul_security-11.0.25-py3-none-any.whl", hash = "sha256:9e48f24d88145acdf37c28b848eb5c98701058678580d406c53bdc614d2da2b8" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/bcd/347c0570ec2ac/azul_security-11.0.31-py3-none-any.whl", hash = "sha256:bcd347c0570ec2ac62310a8097197bde90a053111817e919327f74f2e5aa4c3f" },
 ]
 
 [[package]]
