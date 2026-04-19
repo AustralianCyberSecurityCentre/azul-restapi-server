@@ -101,7 +101,7 @@ dev = [
 ]
 
 plugins = [
-    "azul-metastore>=11.0.41",
+    "azul-metastore>=11.0.61",
     "azul-plugin-retrohunt>=11.0.0",
 ]
 
