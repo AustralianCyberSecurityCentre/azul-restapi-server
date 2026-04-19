@@ -34,23 +34,19 @@ RUN pip install uv
 
 # build and install package
 WORKDIR /tmp/src
-# Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
-# Install hatchling first
-RUN uv pip install --system hatchling hatch-vcs
-
 # Install all dependencies
 RUN uv sync --frozen --no-editable
-
-# Build wheel
+# Install additional plugin based dependencies
+RUN uv pip install --system --group plugins
+# Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
+RUN uv pip install --system hatchling hatch-vcs
 RUN uv build . --out-dir /tmp/
-
-# Capture version BEFORE uninstalling
-RUN PKG_VERSION=$(hatchling version) && \
-    uv pip uninstall --system azul-restapi-server && \
-    uv pip install --system --no-deps --find-links /tmp/ azul-restapi-server==$PKG_VERSION
+RUN uv pip uninstall --system azul-restapi-server
+RUN uv pip install --system --no-deps --find-links /tmp/ azul-restapi-server==$(hatchling version)
 
 # Install additional plugin-based dependencies
 RUN uv pip install --system --group plugins
+
 # Upgrade to dev azul dependencies or upgrade non-dev azul dependencies depending on branch.
 RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow '{}>=0.0.0-dev'; \
@@ -90,7 +86,6 @@ ARG UV_DEFAULT_INDEX
 ARG UV_INDEX_URL
 ARG UV_INSECURE_HOST
 ARG PIP_EXTRA_INDEX_URL
-
 ARG UID=21000
 ARG GID=21000
 # Easiest way to install with uv managing packages.
