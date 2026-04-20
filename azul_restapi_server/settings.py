@@ -53,16 +53,6 @@ class RetrohuntConfig(BaseSettings):
     """Settings for Retrohunt."""
 
     enabled: bool = False
-    host: str = ""
-    port: int = 0
-    db: int = 0
-    cleanup_delay: int = 0
-    cleanup_running_delay: int = 0
-    ttl: int = 0
-    exception_wait: int = 0
-    username: str = Field(default="", env="REDIS_USERNAME")
-    password: str = Field(default="", env="REDIS_PASSWORD")
-
     model_config = SettingsConfigDict(env_prefix="RETROHUNT_")
 
 
