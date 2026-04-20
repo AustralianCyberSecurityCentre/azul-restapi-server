@@ -35,9 +35,10 @@ RUN pip install uv
 # build and install package
 WORKDIR /tmp/src
 # Install all dependencies
-RUN uv sync --frozen --no-editable
+#RUN uv sync --frozen --no-editable
 # Install additional plugin based dependencies
-RUN uv pip install --system --group plugins
+#RUN uv pip install --system --group plugins
+RUN uv sync --frozen --no-editable --group plugins
 # Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
 RUN uv pip install --system hatchling hatch-vcs
 RUN uv build . --out-dir /tmp/
