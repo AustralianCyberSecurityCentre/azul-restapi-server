@@ -35,10 +35,9 @@ RUN pip install uv
 # build and install package
 WORKDIR /tmp/src
 # Install all dependencies
-#RUN uv sync --frozen --no-editable
+RUN uv sync --frozen --no-editable
 # Install additional plugin based dependencies
-#RUN uv pip install --system --group plugins
-RUN uv sync --frozen --no-editable --group plugins
+RUN uv pip install --system --group plugins
 # Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
 RUN uv pip install --system hatchling hatch-vcs
 RUN uv build . --out-dir /tmp/
@@ -50,12 +49,9 @@ RUN uv pip install --system --group plugins
 
 # Upgrade to dev azul dependencies or upgrade non-dev azul dependencies depending on branch.
 RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
-    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | \
-        xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow '{}>=0.0.0-dev'; \
-    uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow 'azul-plugin-retrohunt>=0.0.0-dev'; \
+    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow '{}>=0.0.0-dev'; \
     else \
-    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | \
-        xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
+    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
     fi
 
 FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
