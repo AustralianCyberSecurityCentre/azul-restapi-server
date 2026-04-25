@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-04-18T18:03:53.798271408Z"
+exclude-newer = "2026-04-18T19:04:01.815334102Z"
 exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
@@ -128,7 +128,7 @@ wheels = [
 
 [[package]]
 name = "azul-metastore"
-version = "11.0.120"
+version = "11.0.121"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,7 +153,7 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/d50/921bfc278241a/azul_metastore-11.0.120-py3-none-any.whl", hash = "sha256:d50921bfc278241a4faac0d9d49b17af7f5043f747f9159849f02f11371f989f" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/68e/a49525be010a7/azul_metastore-11.0.121-py3-none-any.whl", hash = "sha256:68ea49525be010a71e29aa89cc2dd93e5701cc6e64b8a4a1dee429c1777bd57d" },
 ]
 
 [[package]]
