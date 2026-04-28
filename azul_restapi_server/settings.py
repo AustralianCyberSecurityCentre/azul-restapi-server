@@ -49,6 +49,13 @@ class RestapiSecurityEnum(StrEnum):
     oidc_pat = "oidc_pat"
 
 
+class RetrohuntConfig(BaseSettings):
+    """Settings for Retrohunt."""
+
+    enabled: bool = False
+    model_config = SettingsConfigDict(env_prefix="RETROHUNT_")
+
+
 class Restapi(BaseSettings):
     """Settings for restapi specific bindings."""
 
@@ -103,6 +110,7 @@ class Logging(BaseSettings):
 
 
 oidc = OIDC()
+retrohunt = RetrohuntConfig()
 restapi = Restapi()
 cors = Cors()
 logging = Logging()
@@ -110,8 +118,9 @@ logging = Logging()
 
 def reset():
     """Reset the configuration objects."""
-    global restapi, cors, logging, oidc
+    global restapi, cors, logging, oidc, retrohunt
     oidc = OIDC()
+    retrohunt = RetrohuntConfig()
     restapi = Restapi()
     cors = Cors()
     logging = Logging()

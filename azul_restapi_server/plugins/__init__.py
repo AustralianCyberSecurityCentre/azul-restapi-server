@@ -21,6 +21,7 @@ from fastapi import APIRouter, Depends
 
 from azul_restapi_server import settings
 from azul_restapi_server.security import validate_token
+from azul_restapi_server.settings import retrohunt
 
 
 def get_router():
@@ -31,6 +32,9 @@ def get_router():
     )
     router = APIRouter()
     for name, plugin in plugins:
+        # don't install retrohunt if it is disabled
+        if name == "retrohunt" and not retrohunt.enabled:
+            continue
         if name == "pat" and not settings.restapi.is_pat_enabled:
             print("Skipped loading plugin pat, because pat isn't enabled.")
             continue
