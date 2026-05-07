@@ -25,7 +25,7 @@ classifiers=[
 ]
 dependencies = [
     "aiofiles>=25.1.0",
-    "azul-bedrock>=10.0.33",
+    "azul-bedrock==11.0.90",
     "azul-security>=10.0.20",
     "cachetools>=7.0.1",
     "click>=8.3.1",
