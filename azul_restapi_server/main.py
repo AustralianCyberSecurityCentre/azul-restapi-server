@@ -219,6 +219,7 @@ app.add_route("/metrics", handle_metrics)
 # add config api
 @app.get(f"/{api_prefix}/config", include_in_schema=False)
 async def get_ui_config():
+    """Get config settings."""
     return {
         "retrohuntEnabled": settings.retrohunt.enabled
     }
