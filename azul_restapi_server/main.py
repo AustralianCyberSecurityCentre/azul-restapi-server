@@ -216,13 +216,13 @@ async def redoc_html(req: Request) -> HTMLResponse:
 # metrics is only available at the root path (not api_prefix) - for prometheus
 app.add_route("/metrics", handle_metrics)
 
+
 # add config api
 @app.get(f"/{api_prefix}/config", include_in_schema=False)
 async def get_ui_config():
     """Get config settings."""
-    return {
-        "retrohuntEnabled": settings.retrohunt.enabled
-    }
+    return {"retrohuntEnabled": settings.retrohunt.enabled}
+
 
 # add extra routes after the doc routes, so they can't accidentally override
 app.include_router(plugins.get_router(), prefix=f"/{api_prefix}")
