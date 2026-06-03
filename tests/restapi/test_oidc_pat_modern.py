@@ -228,6 +228,7 @@ def create_pat_successfully(
 
 def setup_security_environment_variables():
     """Setup required environment variables for azul-security to work."""
+    os.environ["METASTORE_JWT_SIGNING_SECRET"] = "dummy.test.jwt.signing.key.avoid.errors"
     os.environ["OIDC_AUTHORITY_URL"] = "http://localhost:8080"
     os.environ["OIDC_CLIENT_ID"] = "web"
     os.environ["SECURITY_DEFAULT"] = "LOW"
