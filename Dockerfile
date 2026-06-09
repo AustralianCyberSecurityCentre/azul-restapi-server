@@ -1,10 +1,10 @@
-ARG REGISTRY="docker.io/library"
+ARG REGISTRY="dhi.io"
 ARG BUILD_IMAGE='python'
-ARG BUILD_TAG='3.12-trixie'
+ARG BUILD_TAG='3.12-debian-dev'
 ARG BASE_IMAGE='python'
-ARG BASE_TAG='3.12-slim-trixie'
+ARG BASE_TAG='3.12-debian'
 
-FROM dhi.io/python:3.12-debian-dev AS builder
+FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS builder
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PIP_DISABLE_PIP_VERSION_CHECK=yes
 ARG PIP_CERT
@@ -74,7 +74,7 @@ RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
     fi
 
-FROM dhi.io/python:3.12-debian AS base
+FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APP_MODULE=azul_restapi_server.main:app
 ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
@@ -86,7 +86,7 @@ WORKDIR /logs
 COPY --from=builder /usr/local /usr/local
 
 # run tests during build to verify dockerfile has all requirements
-FROM dhi.io/python:3.12-debian-dev AS tester
+FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS tester
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APP_MODULE=azul_restapi_server.main:app
 ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
