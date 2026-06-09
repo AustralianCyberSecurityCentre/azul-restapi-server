@@ -2,7 +2,7 @@ ARG REGISTRY="dhi.io"
 ARG BUILD_IMAGE='python'
 ARG BUILD_TAG='3.12-debian-dev'
 ARG BASE_IMAGE='python'
-ARG BASE_TAG='3.12-debian'
+ARG BASE_TAG='3.12-debian-dev'
 
 FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS builder
 ENV DEBIAN_FRONTEND=noninteractive
@@ -49,7 +49,21 @@ RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
     fi
 
-FROM builder AS build-test
+FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
+ENV DEBIAN_FRONTEND=noninteractive
+ENV APP_MODULE=azul_restapi_server.main:app
+ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
+ENV HOST=127.0.0.1
+ENV PORT=8000
+ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
+ARG UID=65532
+ARG GID=65532
+USER nonroot
+WORKDIR /logs
+COPY --from=builder /usr/local /usr/local
+
+# run tests during build to verify dockerfile has all requirements
+FROM base AS tester
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PIP_DISABLE_PIP_VERSION_CHECK=yes
 ARG PIP_CERT
@@ -65,42 +79,14 @@ ARG UV_INDEX_URL
 ARG UV_INSECURE_HOST
 # Ensure uv installs to the correct directory
 ENV UV_PROJECT_ENVIRONMENT=/usr/local
-
-RUN uv sync --frozen --no-editable --group plugins --group dev
-# Upgrade to dev azul dependencies or upgrade non-dev azul dependencies depending on branch.
-RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
-    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps --prerelease allow '{}>=0.0.0-dev'; \
-    else \
-    uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
-    fi
-
-FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS base
-ENV DEBIAN_FRONTEND=noninteractive
-ENV APP_MODULE=azul_restapi_server.main:app
-ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
-ENV HOST=127.0.0.1
-ENV PORT=8000
-ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
-USER root
-WORKDIR /logs 
-COPY --from=builder /usr/local /usr/local
-
-# run tests during build to verify dockerfile has all requirements
-FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS tester
-ENV DEBIAN_FRONTEND=noninteractive
-ENV APP_MODULE=azul_restapi_server.main:app
-ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
-ENV HOST=127.0.0.1
-ENV PORT=8000
-ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
-ARG UID=65532
-ARG GID=65532
-COPY --from=build-test /usr/local /usr/local
-WORKDIR /logs
-WORKDIR /tmp/tests
 # test scripts will be installed to the local user bin dir. Add local bin path for the azul user.
 ENV PATH="/home/nonroot/.local/bin:$PATH"
-COPY ./tests /tmp/tests
+USER root
+COPY ./pyproject.toml ./pyproject.toml
+RUN pip install uv
+RUN uv pip install --system --group dev
+USER nonroot
+COPY --chown=nonroot ./tests /tmp/tests
 RUN --mount=type=secret,uid=$UID,gid=$GID,id=testSecret \
     set -a && \
     . /run/secrets/testSecret && \
