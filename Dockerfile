@@ -92,7 +92,6 @@ RUN --mount=type=secret,uid=$UID,gid=$GID,id=testSecret \
     . /run/secrets/testSecret && \
     set +a && \
     pytest -o cache_dir=/tmp/cache --tb=short /tmp/tests
-
 # generate empty file to copy to `release` stage so this stage is not skipped due to optimisations.
 RUN touch /tmp/testingpassed
 
