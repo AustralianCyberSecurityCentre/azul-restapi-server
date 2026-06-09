@@ -74,7 +74,7 @@ RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
     fi
 
-FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
+FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS base
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APP_MODULE=azul_restapi_server.main:app
 ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
