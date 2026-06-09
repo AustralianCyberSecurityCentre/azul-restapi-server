@@ -49,6 +49,9 @@ RUN if [ "$GIT_BRANCH_NAME" = "refs/heads/dev" ]; then \
     uv pip freeze | grep 'azul-.*==' | grep -v '^azul-restapi-server' | cut -d "=" -f 1 | xargs -I {} uv pip install --extra-index-url=$UV_INDEX_URL --system --upgrade --no-deps '{}>=0.0.0'; \
     fi
 
+FROM builder AS builder-test
+RUN uv sync --frozen --no-editable --group plugins --group dev
+
 FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APP_MODULE=azul_restapi_server.main:app
@@ -64,34 +67,14 @@ COPY --from=builder /usr/local /usr/local
 
 # run tests during build to verify dockerfile has all requirements
 FROM base AS tester
-ENV DEBIAN_FRONTEND=noninteractive
-ENV PIP_DISABLE_PIP_VERSION_CHECK=yes
-ARG PIP_CERT
-ARG PIP_CLIENT_CERT
-ARG PIP_TRUSTED_HOST
-ARG PIP_INDEX_URL
-ARG PIP_EXTRA_INDEX_URL
-ARG GIT_BRANCH_NAME
-# expected to be public registry (e.g pypi.org)
-ARG UV_DEFAULT_INDEX
-# expected to be private registry
-ARG UV_INDEX_URL
-ARG UV_INSECURE_HOST
-# Ensure uv installs to the correct directory
-ENV UV_PROJECT_ENVIRONMENT=/usr/local
-# test scripts will be installed to the local user bin dir. Add local bin path for the azul user.
-ENV PATH="/home/nonroot/.local/bin:$PATH"
-USER root
-COPY ./pyproject.toml ./pyproject.toml
-RUN pip install uv
-RUN uv pip install --system --group dev
-USER nonroot
-COPY --chown=nonroot ./tests /tmp/tests
+COPY --from=builder-test /usr/local /usr/local
+COPY ./tests /tmp/tests
 RUN --mount=type=secret,uid=$UID,gid=$GID,id=testSecret \
     set -a && \
     . /run/secrets/testSecret && \
     set +a && \
     pytest -o cache_dir=/tmp/cache --tb=short /tmp/tests
+
 # generate empty file to copy to `release` stage so this stage is not skipped due to optimisations.
 RUN touch /tmp/testingpassed
 
