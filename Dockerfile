@@ -69,10 +69,7 @@ COPY --from=builder /usr/local /usr/local
 FROM base AS tester
 COPY --from=builder-test /usr/local /usr/local
 COPY ./tests /tmp/tests
-RUN --mount=type=secret,uid=$UID,gid=$GID,id=testSecret \
-    set -a && \
-    . /run/secrets/testSecret && \
-    set +a && \
+RUN --mount=type=secret,id=testSecret,uid=$UID,gid=$GID export $(cat /run/secrets/testSecret) && \
     pytest -o cache_dir=/tmp/cache --tb=short /tmp/tests
 
 # generate empty file to copy to `release` stage so this stage is not skipped due to optimisations.
