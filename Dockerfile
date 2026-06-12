@@ -59,8 +59,9 @@ ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
 ENV HOST=127.0.0.1
 ENV PORT=8000
 ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
-ARG UID=65532
-ARG GID=65532
+# Have to hardcode anyway to get past buildah version 1.39 (version 1.45 will allow variable expansion in --mount)
+# ARG UID=65532
+# ARG GID=65532
 USER nonroot
 WORKDIR /logs
 COPY --from=builder /usr/local /usr/local
@@ -69,7 +70,7 @@ COPY --from=builder /usr/local /usr/local
 FROM base AS tester
 COPY --from=builder-test /usr/local /usr/local
 COPY ./tests /tmp/tests
-RUN --mount=type=secret,id=testSecret,uid=${UID},gid=${GID} \
+RUN --mount=type=secret,id=testSecret,uid=65532,gid=65532 \
     set -a && . /run/secrets/testSecret && set +a && \
     pytest -o cache_dir=/tmp/cache --tb=short /tmp/tests
 
