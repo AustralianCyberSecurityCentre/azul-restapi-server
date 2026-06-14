@@ -85,5 +85,6 @@ RUN touch /tmp/testingpassed
 FROM base AS release
 # copy from `tester` stage to ensure testing is not skipped due to build optimisations.
 COPY --from=tester /tmp/testingpassed /tmp/
+WORKDIR /usr/local/bin
 ENTRYPOINT ["azul-restapi-server"]
 EXPOSE $PORT
