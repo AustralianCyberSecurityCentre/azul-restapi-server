@@ -2,7 +2,7 @@ ARG REGISTRY="dhi.io"
 ARG BUILD_IMAGE='python'
 ARG BUILD_TAG='3.12-debian-dev'
 ARG BASE_IMAGE='python'
-ARG BASE_TAG='3.12-debian-dev'
+ARG BASE_TAG='3.12-debian'
 
 FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS builder
 ENV DEBIAN_FRONTEND=noninteractive
@@ -53,7 +53,16 @@ FROM builder AS builder-test
 RUN uv sync --frozen --no-editable --group plugins --group dev
 
 FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
-ENV DEBIAN_FRONTEND=noninteractive
+ENV APP_MODULE=azul_restapi_server.main:app
+ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
+ENV HOST=127.0.0.1
+ENV PORT=8000
+ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
+WORKDIR /logs
+COPY --from=builder /usr/local /usr/local
+
+# run tests during build to verify dockerfile has all requirements
+FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS tester
 ENV APP_MODULE=azul_restapi_server.main:app
 ENV WORKER_CLASS=uvicorn.workers.UvicornWorker
 ENV HOST=127.0.0.1
@@ -64,10 +73,6 @@ ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
 # ARG GID=65532
 USER nonroot
 WORKDIR /logs
-COPY --from=builder /usr/local /usr/local
-
-# run tests during build to verify dockerfile has all requirements
-FROM base AS tester
 COPY --from=builder-test /usr/local /usr/local
 COPY ./tests /tmp/tests
 RUN --mount=type=secret,id=testSecret,uid=65532,gid=65532 \
