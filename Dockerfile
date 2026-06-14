@@ -82,9 +82,3 @@ FROM base AS release
 COPY --from=tester /tmp/testingpassed /tmp/
 ENTRYPOINT ["azul-restapi-server"]
 EXPOSE $PORT
-
-#buildah build --tag "restapi-local-buildah" --file "Dockerfile" --isolation=chroot --storage-driver vfs --build-arg=PIP_INDEX_URL=$PIP_INDEX_URL --build-arg=PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL --build-arg=UV_DEFAULT_INDEX=$UV_DEFAULT_INDEX --build-arg=UV_INDEX_URL=$UV_INDEX_URL --build-arg=UV_EXTRA_INDEX_URL=$UV_EXTRA_INDEX_URL --build-arg=GIT_BRANCH_NAME="main" --build-arg=PIP_TRUSTED_HOST=$PIP_TRUSTED_HOST --build-arg=UV_INSECURE_HOST=$PIP_TRUSTED_HOST --build-arg=GOPRIVATE=github.com/AustralianCyberSecurityCentre/* --build-arg=REGISTRY=acr01apptestshared.azurecr.io/public --label 'nil' --secret id=uid,env=DOCKER_BUILD_GID --secret id=gid,env=DOCKER_BUILD_GID --secret id=testSecret,src=$HOME/.dockerSecret
-
-
-
-# buildah build --tag "restapi-local-buildah" --file "Dockerfile" --isolation=chroot --storage-driver vfs --build-arg=PIP_INDEX_URL=$PIP_INDEX_URL --build-arg=PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL --build-arg=UV_DEFAULT_INDEX=$UV_DEFAULT_INDEX --build-arg=UV_INDEX_URL=$UV_INDEX_URL --build-arg=UV_EXTRA_INDEX_URL=$UV_EXTRA_INDEX_URL --build-arg=GIT_BRANCH_NAME="main" --build-arg=PIP_TRUSTED_HOST=$PIP_TRUSTED_HOST --build-arg=UV_INSECURE_HOST=$PIP_TRUSTED_HOST --build-arg=GOPRIVATE=github.com/AustralianCyberSecurityCentre/* --build-arg=REGISTRY=acr01apptestshared.azurecr.io/public --label 'nil' --secret id=uid,env=DOCKER_BUILD_GID --secret id=gid,env=DOCKER_BUILD_GID --secret id=testSecret,src=$HOME/.dockerSecret
