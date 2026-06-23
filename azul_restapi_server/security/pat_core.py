@@ -31,7 +31,7 @@ def _gen_opensearch_jwt(roles: list[str], user: str):
             "iss": "https://localhost",
             "iat": datetime.datetime.now() - datetime.timedelta(hours=1, minutes=2),
             "nbf": datetime.datetime.now() - datetime.timedelta(hours=1, minutes=2),
-            "exp": datetime.datetime.now() + datetime.timedelta(seconds=settings.oidc.pat_cache_ttl),
+            "exp": datetime.datetime.now() + datetime.timedelta(minutes=2, seconds=settings.oidc.pat_cache_ttl),
         },
         get_os_settings().jwt_signing_secret,
         algorithm="HS256",
