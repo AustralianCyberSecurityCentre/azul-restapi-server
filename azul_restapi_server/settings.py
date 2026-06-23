@@ -25,6 +25,7 @@ class OIDC(BaseSettings):
     roles_key: str = "roles"
     username_key: str = "preferred_username"
     cache_ttl: int = 600
+    # Max age of the PAT cache, note this is also how long a JWT is issued for (in seconds)
     pat_cache_ttl: int = 60 * 60 * 24
     swagger_redirect_url: str = "/api/oauth2-redirect"
     model_config = SettingsConfigDict(env_prefix="oidc_")
