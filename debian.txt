@@ -1,1 +1,2 @@
 libfuzzy-dev
+git
