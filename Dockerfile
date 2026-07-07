@@ -37,7 +37,7 @@ RUN pip install uv
 WORKDIR /app/
 RUN rm -rf .venv
 RUN uv venv .venv
-RUN uv sync --frozen --no-editable --group plugins --group dev
+RUN uv sync --frozen --no-editable --group plugins
 # Install package with version attached. (hatchling and hatch-vcs installed after sync to avoid being uninstalled)
 RUN uv pip install hatchling hatch-vcs --system
 RUN uv build . --out-dir /tmp/
@@ -55,7 +55,7 @@ RUN set -eu; \
     fi
 
 FROM builder AS builder-test
-RUN echo "WHY"
+RUN uv sync --frozen --no-editable --group plugins --group dev
 
 FROM $REGISTRY/$BASE_IMAGE:$BASE_TAG AS base
 ENV APP_MODULE=azul_restapi_server.main:app
