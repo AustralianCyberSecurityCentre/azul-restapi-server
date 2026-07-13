@@ -66,6 +66,11 @@ ENV PROMETHEUS_MULTIPROC_DIR=/tmp/
 ENV PATH="/app/.venv/bin:$PATH"
 WORKDIR /logs
 COPY --from=builder /app/.venv/ /app/.venv/
+# Copying of libfuzzy-dev to production image.
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libfuzzy.a /usr/lib/x86_64-linux-gnu/libfuzzy.a
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libfuzzy.so /usr/lib/x86_64-linux-gnu/libfuzzy.so
+COPY --from=builder /usr/include/fuzzy.h /usr/include/fuzzy.h
+COPY --from=builder /usr/include/edit_dist.h /usr/include/edit_dist.h
 
 # run tests during build to verify dockerfile has all requirements
 FROM $REGISTRY/$BUILD_IMAGE:$BUILD_TAG AS tester
