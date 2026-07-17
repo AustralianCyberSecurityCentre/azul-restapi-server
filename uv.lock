@@ -128,7 +128,7 @@ wheels = [
 
 [[package]]
 name = "azul-metastore"
-version = "12.0.50"
+version = "12.0.55"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,12 +153,12 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/4c3/c284eab9efb04/azul_metastore-12.0.50-py3-none-any.whl", hash = "sha256:4c3c284eab9efb048e09420880ebdeab66a76dbc76488e496609ce0620bb8d12" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/f38/319471677329c/azul_metastore-12.0.55-py3-none-any.whl", hash = "sha256:f38319471677329c1362a473f5d4573d23ca085ad25850b0cf95cefc90c95bad" },
 ]
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "12.0.76"
+version = "12.0.77"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -170,7 +170,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/c5d/6c05ec54f06e6/azul_plugin_retrohunt-12.0.76-py3-none-any.whl", hash = "sha256:c5d6c05ec54f06e6d698cb32c975dfa02fedcdaf10c509a1440d5df6e08df247" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/bf3/d274492e0c80e/azul_plugin_retrohunt-12.0.77-py3-none-any.whl", hash = "sha256:bf3d274492e0c80e21df2902b9bfd50b46d27c3101f1fabe0c2faaf55ec1425c" },
 ]
 
 [[package]]
