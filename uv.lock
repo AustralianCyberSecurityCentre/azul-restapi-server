@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "12.0.39"
+version = "12.0.41"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,12 +123,12 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/3b9/95414c3c15849/azul_bedrock-12.0.39-py3-none-any.whl", hash = "sha256:3b995414c3c1584938b3ecaff6fd28d855a6658b2a9ae8d771563c644a7661dd" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/fe4/adf7443e6f4b4/azul_bedrock-12.0.41-py3-none-any.whl", hash = "sha256:fe4adf7443e6f4b4622211e4eb4a009c3a00029b406d53b034dbcd199d3f170e" },
 ]
 
 [[package]]
 name = "azul-metastore"
-version = "12.0.59"
+version = "12.0.62"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,12 +153,12 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/ebd/12aa28681ac6d/azul_metastore-12.0.59-py3-none-any.whl", hash = "sha256:ebd12aa28681ac6d16c0b19b7193aa20ee49df286dc9f679b430304415596e3b" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/d4b/acdc965c6a75a/azul_metastore-12.0.62-py3-none-any.whl", hash = "sha256:d4bacdc965c6a75a43807564dfba6b865a60d150fb16e11a8fa6669524332fd2" },
 ]
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "12.0.81"
+version = "12.0.83"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -170,7 +170,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/20e/734e0de762d85/azul_plugin_retrohunt-12.0.81-py3-none-any.whl", hash = "sha256:20e734e0de762d85f226500c33a308ae59da9852ad68fa76f7dd85590d9cfb5b" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/513/07b7f488394e8/azul_plugin_retrohunt-12.0.83-py3-none-any.whl", hash = "sha256:51307b7f488394e8f529e730c0a2372a7f0f48ba16502f18b67a80b898732e28" },
 ]
 
 [[package]]
@@ -251,7 +251,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "12.0.46"
+version = "12.0.48"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -264,12 +264,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/367/93bb51f299bac/azul_runner-12.0.46-py3-none-any.whl", hash = "sha256:36793bb51f299bacf54fe924841e81318014ef08b8579a61a805dfca69ce1a13" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/41c/53a986f14559f/azul_runner-12.0.48-py3-none-any.whl", hash = "sha256:41c53a986f14559fc51e92166fdb367f6a51050f0684cb9474ff2114620cd52c" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "12.0.14"
+version = "12.0.16"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/025/ec3808c9b40ae/azul_security-12.0.14-py3-none-any.whl", hash = "sha256:025ec3808c9b40ae4f667c17c11283514bed8c88ef0cad64596a25f6cccecc10" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/e1f/c649f65d1ed72/azul_security-12.0.16-py3-none-any.whl", hash = "sha256:e1fc649f65d1ed7279aacdc337e4d3c15e87b7f445b1549e1a24160ef2cf4b82" },
 ]
 
 [[package]]
@@ -846,10 +846,10 @@ wheels = [
 
 [[package]]
 name = "malpz"
-version = "12.0.6"
+version = "12.0.8"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/daf/2f01a2cee5a28/malpz-12.0.6-py3-none-any.whl", hash = "sha256:daf2f01a2cee5a2899d8ee53bc1b8b785f458aa0d11353e1a86d5535fa432d0d" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/8ea/524ef458adc9c/malpz-12.0.8-py3-none-any.whl", hash = "sha256:8ea524ef458adc9cdd0fabb0de77f01e9408e79968e9ae7b2b5472623cc2f280" },
 ]
 
 [[package]]
