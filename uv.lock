@@ -128,7 +128,7 @@ wheels = [
 
 [[package]]
 name = "azul-metastore"
-version = "12.0.62"
+version = "12.0.64"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,12 +153,12 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/d4b/acdc965c6a75a/azul_metastore-12.0.62-py3-none-any.whl", hash = "sha256:d4bacdc965c6a75a43807564dfba6b865a60d150fb16e11a8fa6669524332fd2" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/f1e/41d1bb3f2d26e/azul_metastore-12.0.64-py3-none-any.whl", hash = "sha256:f1e41d1bb3f2d26eb84ca4db2181708c14952aade9db0b4d9964099361d0cdea" },
 ]
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "12.0.83"
+version = "12.0.84"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -170,7 +170,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/513/07b7f488394e8/azul_plugin_retrohunt-12.0.83-py3-none-any.whl", hash = "sha256:51307b7f488394e8f529e730c0a2372a7f0f48ba16502f18b67a80b898732e28" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/483/2698b1ee9c2c9/azul_plugin_retrohunt-12.0.84-py3-none-any.whl", hash = "sha256:4832698b1ee9c2c9d686bb21cdb7f1bf967e7048b0bf9eba89909b8470f125b9" },
 ]
 
 [[package]]
@@ -269,7 +269,7 @@ wheels = [
 
 [[package]]
 name = "azul-security"
-version = "12.0.16"
+version = "12.0.18"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/e1f/c649f65d1ed72/azul_security-12.0.16-py3-none-any.whl", hash = "sha256:e1fc649f65d1ed7279aacdc337e4d3c15e87b7f445b1549e1a24160ef2cf4b82" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/b84/d879f1dff12c0/azul_security-12.0.18-py3-none-any.whl", hash = "sha256:b84d879f1dff12c0e40d03eabb90e82654094d91020db7be78fd748dec413d9a" },
 ]
 
 [[package]]
