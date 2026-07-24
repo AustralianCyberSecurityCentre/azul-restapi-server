@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "12.0.41"
+version = "12.0.43"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,7 +123,7 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/fe4/adf7443e6f4b4/azul_bedrock-12.0.41-py3-none-any.whl", hash = "sha256:fe4adf7443e6f4b4622211e4eb4a009c3a00029b406d53b034dbcd199d3f170e" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/fb5/69369b7d0f267/azul_bedrock-12.0.43-py3-none-any.whl", hash = "sha256:fb569369b7d0f2677a964d8c4beee33f9ac131689fc1c1ab0d7224f3aec25ab7" },
 ]
 
 [[package]]
@@ -251,7 +251,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "12.0.54"
+version = "12.0.57"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -264,12 +264,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/a76/a4851e8ff35a6/azul_runner-12.0.54-py3-none-any.whl", hash = "sha256:a76a4851e8ff35a68cd81c68333f7f4527c00998b492825285cbf7c5a153355a" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/374/69f78923d7ef1/azul_runner-12.0.57-py3-none-any.whl", hash = "sha256:37469f78923d7ef17ea45129fdd78f37b81b712658d0abc54c9956454973e0e6" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "12.0.18"
+version = "12.0.20"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/b84/d879f1dff12c0/azul_security-12.0.18-py3-none-any.whl", hash = "sha256:b84d879f1dff12c0e40d03eabb90e82654094d91020db7be78fd748dec413d9a" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/349/3554e926606a5/azul_security-12.0.20-py3-none-any.whl", hash = "sha256:3493554e926606a58bd45d325a5f637595ea00aab6748eb37c96ef0528555078" },
 ]
 
 [[package]]
@@ -846,10 +846,10 @@ wheels = [
 
 [[package]]
 name = "malpz"
-version = "12.0.8"
+version = "12.0.10"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/8ea/524ef458adc9c/malpz-12.0.8-py3-none-any.whl", hash = "sha256:8ea524ef458adc9cdd0fabb0de77f01e9408e79968e9ae7b2b5472623cc2f280" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/73b/3342350219d56/malpz-12.0.10-py3-none-any.whl", hash = "sha256:73b3342350219d56ea24ba1b7d701802d195b69625a6f3035e5aa8ce9ff1ff82" },
 ]
 
 [[package]]
