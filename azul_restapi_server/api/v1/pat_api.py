@@ -111,6 +111,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
 
     # Verify the PAT has the minimum required access for Opensearch.
     pat_user_info = pat_core.create_userinfo_for_pat(resp)
+    if pat_user_info.credentials is None:
+        raise TypeError("Expected pat_user_info.credentials to be Credentials, got None")
     opensearch_account_info = datastore.get_user_account(datastore.credentials_to_access(pat_user_info.credentials))
     sec = security.Security()
     found_groups = set(sec.safe_to_unsafe(opensearch_account_info.get("roles", []), drop_mismatch=True))
