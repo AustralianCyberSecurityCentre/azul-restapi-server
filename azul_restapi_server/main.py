@@ -8,6 +8,7 @@ import importlib.resources
 import sys
 import traceback
 from concurrent.futures import ThreadPoolExecutor
+from typing import Any
 
 from azul_bedrock.exceptions_bedrock import ApiException, DispatcherApiException
 from fastapi import FastAPI, Request
@@ -41,7 +42,7 @@ else:
 
 
 # Optional settings to pass into App setup
-optional_settings = {}
+optional_settings: dict[str, Any] = {}
 get_ui_optional_settings = {}
 if (
     settings.restapi.security == settings.RestapiSecurityEnum.oidc
@@ -113,14 +114,14 @@ app.add_middleware(
 )
 
 _logger = RestAPILogger()
-app.logger = _logger.logger
-app.audit_logger = _logger.audit_logger
+app.logger = _logger.logger  # ty: ignore[unresolved-attribute]
+app.audit_logger = _logger.audit_logger  # ty: ignore[unresolved-attribute]
 
 
 try:
     from opensearchpy import exceptions as elexc
 except ImportError:
-    elexc = None
+    elexc = None  # ty: ignore[invalid-assignment]
     print("Not handling opensearch exceptions.")
 else:
     # has to be installed into the app
@@ -143,7 +144,7 @@ def base_api_exception_handler(request, exc: ApiException | DispatcherApiExcepti
     # 2xx success
     # 4xx client error
     if not (200 <= exc.status_code <= 299) and not (400 <= exc.status_code <= 499):
-        app.logger.error(repr(exc))
+        app.logger.error(repr(exc))  # ty: ignore[unresolved-attribute]
         print(exc.detail, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
 

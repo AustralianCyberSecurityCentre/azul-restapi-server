@@ -111,7 +111,7 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
 
     # Verify the PAT has the minimum required access for Opensearch.
     pat_user_info = pat_core.create_userinfo_for_pat(resp)
-    opensearch_account_info = datastore.get_user_account(datastore.credentials_to_access(pat_user_info.credentials))
+    opensearch_account_info = datastore.get_user_account(datastore.credentials_to_access(pat_user_info.credentials))  # ty: ignore[invalid-argument-type] ty doesn't understand that create_userinfo_for_pat will always create Credentials and assign it to pat_user_info.credentials
     sec = security.Security()
     found_groups = set(sec.safe_to_unsafe(opensearch_account_info.get("roles", []), drop_mismatch=True))
     missing_labels = sec.minimum_required_access.difference(found_groups)

@@ -19,7 +19,7 @@ click.option = partial(click.option, show_default=True)
 @click.option("--reload/--no-reload", default=settings.restapi.reload)
 def run(host, port, workers, reload):
     """Start the Azul API server."""
-    headers: list[str, str] = []
+    headers: list[tuple[str, str]] = []
     for header_label, header_val in settings.restapi.headers.items():
         headers.append((header_label.strip(), header_val.strip()))
 
