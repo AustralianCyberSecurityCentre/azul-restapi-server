@@ -14,9 +14,9 @@ Plugin modules should expose a variable of type `fastapi.APIRouter` at this entr
 Example Entry point for plugins:
 
 ```python
-entry_points={
-    'azul_restapi.plugin': [
-        'extraroute = my_plugin.v1.extraroute:router',
+entry_points = {
+    "azul_restapi.plugin": [
+        "extraroute = my_plugin.v1.extraroute:router",
     ],
 }
 ```
