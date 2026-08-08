@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "12.0.70"
+version = "12.0.73"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,12 +123,12 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/0b4/3a14965eeaa90/azul_bedrock-12.0.70-py3-none-any.whl", hash = "sha256:0b43a14965eeaa90ef144dafc333c54b7c1e6fdc95a140ba4a2d855520360198" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/7e6/2e52a70fe1b00/azul_bedrock-12.0.73-py3-none-any.whl", hash = "sha256:7e62e52a70fe1b00fbb73088d11d92e990fe4ae46ccf3cf8d2c2d110fa7b9a84" },
 ]
 
 [[package]]
 name = "azul-metastore"
-version = "12.0.120"
+version = "12.0.129"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -153,12 +153,12 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/353/9eb2ba06a6dc9/azul_metastore-12.0.120-py3-none-any.whl", hash = "sha256:3539eb2ba06a6dc96aa2815f4849a9c88275543951134f6783ac51b0179fe0b1" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/af6/e0f87cfa01dd2/azul_metastore-12.0.129-py3-none-any.whl", hash = "sha256:af6e0f87cfa01dd22ed5986bd37fd965afb1b97113a69e99bf7f5a89fbf6fe1f" },
 ]
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "12.0.163"
+version = "12.0.176"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -170,7 +170,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/433/4ebe75423f3db/azul_plugin_retrohunt-12.0.163-py3-none-any.whl", hash = "sha256:4334ebe75423f3db31beaf874a64864a8d37bbc81bf0a4d9dde4162077915bcd" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/34c/7d5c6291d4c29/azul_plugin_retrohunt-12.0.176-py3-none-any.whl", hash = "sha256:34c7d5c6291d4c299ffa689da6b654ba3f89eb7eceb39a8ab21551628c47f49c" },
 ]
 
 [[package]]
@@ -251,7 +251,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "12.0.100"
+version = "12.0.104"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -264,12 +264,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/e5a/1f568093fb6be/azul_runner-12.0.100-py3-none-any.whl", hash = "sha256:e5a1f568093fb6be07778089fe9b7e5f586533e90e151e1b608ecc20b709cc4c" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/39d/06bae4a52ae99/azul_runner-12.0.104-py3-none-any.whl", hash = "sha256:39d06bae4a52ae99f4a51e3a521f5c327baadbf4837c60eee0a90d605b62e6c7" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "12.0.44"
+version = "12.0.47"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/b78/8ee71052a4f12/azul_security-12.0.44-py3-none-any.whl", hash = "sha256:b788ee71052a4f1212124993661830bbd45dc3002b9c09654edf0af245003bc7" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/54d/5b75ab24f4c8a/azul_security-12.0.47-py3-none-any.whl", hash = "sha256:54d5b75ab24f4c8a8cd764138c7f75267212d22b56bc1cf90eb4750fac82cc20" },
 ]
 
 [[package]]
@@ -846,10 +846,10 @@ wheels = [
 
 [[package]]
 name = "malpz"
-version = "12.0.20"
+version = "12.0.21"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/3ca/8dcc56f2f14ad/malpz-12.0.20-py3-none-any.whl", hash = "sha256:3ca8dcc56f2f14adbd4a60f31a56d51182e869712d3891cb8046807fb8e3ba7c" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/426/85904cfff9217/malpz-12.0.21-py3-none-any.whl", hash = "sha256:42685904cfff9217ce040a9fb4ee9eef019b596d7de5437e4590bdccebe8f82f" },
 ]
 
 [[package]]
@@ -1372,15 +1372,14 @@ wheels = [
 
 [[package]]
 name = "python-discovery"
-version = "1.5.0"
+version = "1.5.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
-    { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/51/276f964496a5714ab9f320896195639086881c2b39c03b5ad13de84acbb8/python_discovery-1.5.0.tar.gz", hash = "sha256:3e014c6327154d3dda27939a9a0dc9c5c000439f1906d3f303b48f984bd2ecef", size = 72483, upload-time = "2026-07-21T13:14:14.641Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/04/b7/1581a8103855c43567776aa34135e5ec3c597346c23bfd10c7eb5e0b10a4/python_discovery-1.5.1.tar.gz", hash = "sha256:e2ea8b884cd1701f386eda8cf327b87743f1dc21b7f784470799537d95635384", size = 77200, upload-time = "2026-07-31T22:06:02.48Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c7/7b/14882602ddee241d7984a742fcb423cb4a30fb0d6efc546ac3129fba475a/python_discovery-1.5.0-py3-none-any.whl", hash = "sha256:70c4fc61b4e7404e44f01d6fc44a715c4d685ca6cea83d295922f05891877c98", size = 34205, upload-time = "2026-07-21T13:14:13.398Z" },
+    { url = "https://files.pythonhosted.org/packages/6a/07/a89b539750a159d5101c4eb9fc84e2961f65cefbd5e0b7440b284471c0b0/python_discovery-1.5.1-py3-none-any.whl", hash = "sha256:ac07f44cade589d954e9d6a1e1468539fdddd2cf676beb51da73e0f156b7c932", size = 35752, upload-time = "2026-07-31T22:06:01.116Z" },
 ]
 
 [[package]]
@@ -1527,11 +1526,11 @@ wheels = [
 
 [[package]]
 name = "redis"
-version = "7.4.0"
+version = "7.4.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7b/7f/3759b1d0d72b7c92f0d70ffd9dc962b7b7b5ee74e135f9d7d8ab06b8a318/redis-7.4.0.tar.gz", hash = "sha256:64a6ea7bf567ad43c964d2c30d82853f8df927c5c9017766c55a1d1ed95d18ad", size = 4943913, upload-time = "2026-03-24T09:14:37.53Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/51/93/05e7d4a65285066a74f48697f9b9cde5cfce71398033d69ed83c3d98f5c9/redis-7.4.1.tar.gz", hash = "sha256:1a1df5067062cf7cbe677994e391f8ee0840f499d370f1a71266e0dd3aa9308e", size = 4945742, upload-time = "2026-06-05T09:10:06.703Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/74/3a/95deec7db1eb53979973ebd156f3369a72732208d1391cd2e5d127062a32/redis-7.4.0-py3-none-any.whl", hash = "sha256:a9c74a5c893a5ef8455a5adb793a31bb70feb821c86eccb62eebef5a19c429ec", size = 409772, upload-time = "2026-03-24T09:14:35.968Z" },
+    { url = "https://files.pythonhosted.org/packages/4a/2e/2677f3f93dae0497e7e33b6637302e7f3744efc553f34231183e32584885/redis-7.4.1-py3-none-any.whl", hash = "sha256:1fa4647af1c5e93a2c685aa248ee44cce092691146d41390518dabe9a99839b0", size = 410171, upload-time = "2026-06-05T09:10:05.128Z" },
 ]
 
 [[package]]
