@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "12.0.77"
+version = "12.0.80"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,7 +123,7 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/bc7/ab284533ae68e/azul_bedrock-12.0.77-py3-none-any.whl", hash = "sha256:bc7ab284533ae68e0c1807e3023e75f6a4471354f8eaf976210d16838f6660aa" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/bb9/87b37c4e6b804/azul_bedrock-12.0.80-py3-none-any.whl", hash = "sha256:bb987b37c4e6b804597eae2e59fef08e808c44e5b55a64e8ea80c830c12d88ba" },
 ]
 
 [[package]]
@@ -158,7 +158,7 @@ wheels = [
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "12.0.190"
+version = "12.0.192"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -170,7 +170,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/b78/6c3ee5c4297b2/azul_plugin_retrohunt-12.0.190-py3-none-any.whl", hash = "sha256:b786c3ee5c4297b25fc0a4441488a8e30b88cf9db7c798cfb59511259369ce64" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/74e/0c10f18b2ce34/azul_plugin_retrohunt-12.0.192-py3-none-any.whl", hash = "sha256:74e0c10f18b2ce348a6521654c392229d13e30b6b0b043ffc63a3ff81c22e613" },
 ]
 
 [[package]]
@@ -251,7 +251,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "12.0.114"
+version = "12.0.117"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -264,12 +264,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/2d6/dbc95fd5041c5/azul_runner-12.0.114-py3-none-any.whl", hash = "sha256:2d6dbc95fd5041c515487b482534ab2d947ca102d3a5a5da5df473f6b9de9129" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/02c/23b9458550227/azul_runner-12.0.117-py3-none-any.whl", hash = "sha256:02c23b9458550227b64e347f40dd9922103cea806b3ee8b7a5fde68809a39b82" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "12.0.55"
+version = "12.0.57"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/34a/6925e0c81b8dc/azul_security-12.0.55-py3-none-any.whl", hash = "sha256:34a6925e0c81b8dc98d68e0a59e0a03f66909a7757bd3e09f30d47d1d9b75552" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/289/8d5b081222c0f/azul_security-12.0.57-py3-none-any.whl", hash = "sha256:2898d5b081222c0fda35d9669af08e9a2073361700565df0a32fb9973174228a" },
 ]
 
 [[package]]
@@ -846,10 +846,10 @@ wheels = [
 
 [[package]]
 name = "malpz"
-version = "12.0.25"
+version = "12.0.27"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/590/dcfb3628c899f/malpz-12.0.25-py3-none-any.whl", hash = "sha256:590dcfb3628c899f51b3d4962b21ab45b4d96c8a49560c9ee88202d078f95c60" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/ac0/2ac3350bd8f3e/malpz-12.0.27-py3-none-any.whl", hash = "sha256:ac02ac3350bd8f3e06706894828e26afb45e12e33dc00555ac3fc9774d11ed43" },
 ]
 
 [[package]]
