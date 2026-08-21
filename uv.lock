@@ -105,7 +105,7 @@ wheels = [
 
 [[package]]
 name = "azul-bedrock"
-version = "12.0.87"
+version = "12.0.90"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -123,7 +123,7 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/721/06d3998cdb77f/azul_bedrock-12.0.87-py3-none-any.whl", hash = "sha256:72106d3998cdb77f83a3a28c8be13dccf0592710c7184433bc5fae6e5eb7aa96" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/8c9/429cf0e2c26aa/azul_bedrock-12.0.90-py3-none-any.whl", hash = "sha256:8c9429cf0e2c26aa518b1f3403e5e703f9feb3de80720fef85609af7433654da" },
 ]
 
 [[package]]
@@ -251,7 +251,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "12.0.134"
+version = "12.0.137"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -264,12 +264,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/655/38d411a6126ab/azul_runner-12.0.134-py3-none-any.whl", hash = "sha256:65538d411a6126ab60dad7c78229cf9ac98c153df28c2d62a49bbd2bb44ed10f" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/2b4/1ab43eb70e3fa/azul_runner-12.0.137-py3-none-any.whl", hash = "sha256:2b41ab43eb70e3fa861c4cd3988563a7e7abfc991530ef9427cedf13b0f3401b" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "12.0.68"
+version = "12.0.70"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -280,7 +280,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/e52/4c6ee62d03e84/azul_security-12.0.68-py3-none-any.whl", hash = "sha256:e524c6ee62d03e84e051e0c2f289d25410c4512681516b0233fa0043b0a62f98" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/0a8/b39f7c6eb5536/azul_security-12.0.70-py3-none-any.whl", hash = "sha256:0a8b39f7c6eb553664e939de75b1b441bb35287dc9e9f5cfbad8a1579854eb29" },
 ]
 
 [[package]]
