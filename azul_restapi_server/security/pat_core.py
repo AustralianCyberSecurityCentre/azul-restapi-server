@@ -6,6 +6,7 @@ from threading import RLock
 
 import cachetools
 import jwt
+import opensearchpy
 from azul_bedrock import datastore, exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
 from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
@@ -17,6 +18,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERR
 
 from azul_restapi_server import settings
 
+MAX_PATS_PER_REQUEST = 10000
 PAT_CACHE_SIZE = 100
 S_ANY = "s-any"
 
@@ -168,7 +170,7 @@ _index_mapping = {
 }
 
 
-def get_opensearch_pat_admin_session():
+def get_opensearch_pat_admin_session() -> opensearchpy.OpenSearch:
     """Get an Opensearch session."""
     return datastore.credentials_to_es(
         Credentials(
@@ -178,6 +180,34 @@ def get_opensearch_pat_admin_session():
             password=get_os_settings().opensearch_azul_security_password,
         )
     )
+
+
+def list_all_pats(os_session):
+    """List all PATS in Opensearch."""
+    current_pats = os_session.search(
+        index=get_os_settings().opensearch_azul_security_index,
+        body={
+            "query": {"match_all": {}},
+            "_source": {"excludes": "pat"},
+            "size": MAX_PATS_PER_REQUEST,
+        },
+        ignore=[404],
+    )
+
+    current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
+    results: list[azm_pat.PATView] = []
+
+    for p in current_pats_selected:
+        id = p.get("_id")
+        source = p.get("_source", {})
+        source["id"] = id
+        results.append(azm_pat.PATView.model_validate(source))
+    warnings = ""
+    if len(results) > MAX_PATS_PER_REQUEST:
+        warnings = (
+            f"There are over {MAX_PATS_PER_REQUEST} not all PATs have been returned please cleanup some old PATs."
+        )
+    return azm_pat.ListOfPAT(pats=results, warnings=warnings)
 
 
 def create_azul_security_index():
@@ -195,6 +225,31 @@ def create_azul_security_index():
             session.indices.put_template(name=index_name, body=template, ignore=404)
             session.indices.put_mapping(index=index_name, body=template["mappings"], ignore=404)
             session.indices.create(index=index_name)
+        # FUTURE - remove migration script in Azul 14.
+        # Script only needed for going from 12 -> 13
+        else:
+            # Update the index if PATs can't be listed, as this means the model is likely invalid.
+            try:
+                list_all_pats(session)
+            except Exception:
+                session.indices.put_template(name=index_name, body=template, ignore=404)
+                session.indices.put_mapping(index=index_name, body=template["mappings"], ignore=404)
+                session.update_by_query(
+                    index=index_name,
+                    body={
+                        "script": {
+                            "source": """
+                            if (!ctx._source.containsKey('api_access')) {
+                                ctx._source.api_access = 'all';
+                            }
+                            """,
+                            "lang": "painless",
+                        },
+                        "query": {"bool": {"must_not": {"exists": {"field": "api_access"}}}},
+                    },
+                    wait_for_completion=True,
+                )
+
     except Exception as e:
         raise exceptions_bedrock.BaseAzulException(
             internal=ExceptionCodeEnum.RestapiFailedToCreateSecurityIndex, parameters={"inner_exception": str(e)}

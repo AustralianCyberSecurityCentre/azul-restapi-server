@@ -17,7 +17,6 @@ from starlette.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 
 from azul_restapi_server.security import pat_core
 
-MAX_PATS_PER_REQUEST = 10000
 PASSWORD_ALPHABET = string.ascii_letters + string.digits
 
 
@@ -197,30 +196,7 @@ async def list_pats(creds: UserInfo = Depends(get_user_creds)):
     """List the PATs currently stored in Azul."""
     _verify_user_is_admin(creds)
     os_session = pat_core.get_opensearch_pat_admin_session()
-    current_pats = os_session.search(
-        index=get_os_settings().opensearch_azul_security_index,
-        body={
-            "query": {"match_all": {}},
-            "_source": {"excludes": "pat"},
-            "size": MAX_PATS_PER_REQUEST,
-        },
-        ignore=[404],
-    )
-
-    current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
-    results: list[azm_pat.PATView] = []
-
-    for p in current_pats_selected:
-        id = p.get("_id")
-        source = p.get("_source", {})
-        source["id"] = id
-        results.append(azm_pat.PATView.model_validate(source))
-    warnings = ""
-    if len(results) > MAX_PATS_PER_REQUEST:
-        warnings = (
-            f"There are over {MAX_PATS_PER_REQUEST} not all PATs have been returned please cleanup some old PATs."
-        )
-    return azm_pat.ListOfPAT(pats=results, warnings=warnings)
+    return pat_core.list_all_pats(os_session)
 
 
 @router.delete(
