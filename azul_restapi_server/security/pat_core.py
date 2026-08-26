@@ -52,6 +52,7 @@ def create_userinfo_for_pat(pat_metadata: azm_pat.PATView) -> UserInfo:
         org="unknown",
         roles=pat_metadata.roles,
         email=pat_metadata.owner_username,
+        api_access=pat_metadata.api_access,
         credentials=creds,
         decoded={"name": pat_username, "roles": pat_metadata.roles, "type": "pat"},
         unique_id=pat_metadata.id,
@@ -119,19 +120,19 @@ def validate_pat(token: str) -> UserInfo:
 
 
 _template_settings = {
-    "index.mapping.total_fields.limit": 2000,
+    "index.mapping.total_fields.limit": 2000,  # FUTURE - remove total_fields and rely on defaults
     "number_of_shards": 1,
     "number_of_replicas": 2,
     "refresh_interval": "30s",
     "analysis": {
-        "analyzer": {
+        "analyzer": {  # FUTURE - remove all analyzers
             "path": {"tokenizer": "hierarchy"},
             "path_reversed": {"tokenizer": "hierarchy_reversed"},
             "pathw": {"tokenizer": "hierarchyw"},
             "pathw_reversed": {"tokenizer": "hierarchyw_reversed"},
             "alphanumeric": {"tokenizer": "alphanumeric"},
         },
-        "tokenizer": {
+        "tokenizer": {  # FUTURE - remove all tokenizers
             "hierarchy": {"type": "path_hierarchy", "delimiter": "/"},
             "hierarchy_reversed": {
                 "type": "path_hierarchy",
@@ -160,6 +161,7 @@ _index_mapping = {
         "pat": {"type": "keyword"},
         "owner_username": {"type": "keyword"},
         "roles": {"type": "keyword"},
+        "api_access": {"type": "keyword"},
         "creation_date": {"type": "date"},
         "last_used_date": {"type": "date"},
     },

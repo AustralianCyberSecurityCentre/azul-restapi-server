@@ -7,7 +7,7 @@ import string
 
 from azul_bedrock import datastore, exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
-from azul_bedrock.models_auth import UserInfo
+from azul_bedrock.models_auth import ApiAccessEnum, UserInfo
 from azul_bedrock.models_restapi import pat as azm_pat
 from azul_bedrock.settings import get_opensearch as get_os_settings
 from azul_security import admin, security
@@ -101,6 +101,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         id=generate_pat(20),  # using a mini-pat as a random temporary id before opensearch issues one.
         pat=generated_pat,
         ready_api_key="",
+        # If ALL is set the API key has all permissions anyway, so only set that.
+        api_access=[ApiAccessEnum.All] if ApiAccessEnum.All in request_pat.api_access else request_pat.api_access,
         pat_name=request_pat.name,
         description=request_pat.description,
         roles=request_pat.roles,
@@ -154,6 +156,7 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         "owner_username": resp.owner_username,
         "creation_date": resp.creation_date,
         "last_used_date": resp.last_used_date,
+        "api_access": resp.api_access,
     }
 
     try:

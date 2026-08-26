@@ -6,7 +6,7 @@ from typing import Dict
 
 import cachetools
 import httpx
-from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
+from azul_bedrock.models_auth import ApiAccessEnum, CredentialFormat, Credentials, UserInfo
 from fastapi import HTTPException
 from jose import exceptions as jwt_exceptions
 from jose import jwt
@@ -47,6 +47,7 @@ def claims_to_user(claims: dict) -> UserInfo:
         username=username,
         org=claims.get("org", "unknown"),
         email=claims.get("email", ""),
+        api_access=[ApiAccessEnum.All],
         roles=[g.lstrip("/") for g in claims.get(settings.oidc.roles_key, [])],
         decoded=claims,
         unique_id=unique_id,

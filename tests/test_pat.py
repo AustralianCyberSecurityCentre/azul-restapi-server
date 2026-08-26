@@ -1,3 +1,4 @@
+from azul_bedrock.models_auth import ApiAccessEnum
 import unittest
 from azul_bedrock.exception_enums import ExceptionCodeEnum
 
@@ -67,7 +68,9 @@ class TestPATFunctionality(unittest.TestCase):
             # Create PATS
             resp = client.post(
                 "/v0/authenticate/pat",
-                json=azm_pat.PATRequest(name="test_pat_success", roles=["s-test1", "s-test2", "s-test3"]).model_dump(),
+                json=azm_pat.PATRequest(
+                    name="test_pat_success", api_access=[ApiAccessEnum.All], roles=["s-test1", "s-test2", "s-test3"]
+                ).model_dump(),
                 headers={"X-API-Key": self.pat_issue.ready_api_key},
             )
             print(resp.content)
