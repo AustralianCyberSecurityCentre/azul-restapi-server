@@ -240,7 +240,7 @@ def create_azul_security_index():
                         "script": {
                             "source": """
                             if (!ctx._source.containsKey('api_access')) {
-                                ctx._source.api_access = 'all';
+                                ctx._source.api_access = ['all'];
                             }
                             """,
                             "lang": "painless",
