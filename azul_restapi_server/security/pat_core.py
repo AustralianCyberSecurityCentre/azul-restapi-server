@@ -6,6 +6,7 @@ from threading import RLock
 
 import cachetools
 import jwt
+import opensearchpy
 from azul_bedrock import datastore, exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
 from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
@@ -17,6 +18,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERR
 
 from azul_restapi_server import settings
 
+MAX_PATS_PER_REQUEST = 10000
 PAT_CACHE_SIZE = 100
 S_ANY = "s-any"
 
@@ -52,6 +54,7 @@ def create_userinfo_for_pat(pat_metadata: azm_pat.PATView) -> UserInfo:
         org="unknown",
         roles=pat_metadata.roles,
         email=pat_metadata.owner_username,
+        api_access=pat_metadata.api_access,
         credentials=creds,
         decoded={"name": pat_username, "roles": pat_metadata.roles, "type": "pat"},
         unique_id=pat_metadata.id,
@@ -119,19 +122,19 @@ def validate_pat(token: str) -> UserInfo:
 
 
 _template_settings = {
-    "index.mapping.total_fields.limit": 2000,
+    "index.mapping.total_fields.limit": 2000,  # FUTURE - remove total_fields and rely on defaults
     "number_of_shards": 1,
     "number_of_replicas": 2,
     "refresh_interval": "30s",
     "analysis": {
-        "analyzer": {
+        "analyzer": {  # FUTURE - remove all analyzers
             "path": {"tokenizer": "hierarchy"},
             "path_reversed": {"tokenizer": "hierarchy_reversed"},
             "pathw": {"tokenizer": "hierarchyw"},
             "pathw_reversed": {"tokenizer": "hierarchyw_reversed"},
             "alphanumeric": {"tokenizer": "alphanumeric"},
         },
-        "tokenizer": {
+        "tokenizer": {  # FUTURE - remove all tokenizers
             "hierarchy": {"type": "path_hierarchy", "delimiter": "/"},
             "hierarchy_reversed": {
                 "type": "path_hierarchy",
@@ -160,13 +163,14 @@ _index_mapping = {
         "pat": {"type": "keyword"},
         "owner_username": {"type": "keyword"},
         "roles": {"type": "keyword"},
+        "api_access": {"type": "keyword"},
         "creation_date": {"type": "date"},
         "last_used_date": {"type": "date"},
     },
 }
 
 
-def get_opensearch_pat_admin_session():
+def get_opensearch_pat_admin_session() -> opensearchpy.OpenSearch:
     """Get an Opensearch session."""
     return datastore.credentials_to_es(
         Credentials(
@@ -176,6 +180,34 @@ def get_opensearch_pat_admin_session():
             password=get_os_settings().opensearch_azul_security_password,
         )
     )
+
+
+def list_all_pats(os_session):
+    """List all PATS in Opensearch."""
+    current_pats = os_session.search(
+        index=get_os_settings().opensearch_azul_security_index,
+        body={
+            "query": {"match_all": {}},
+            "_source": {"excludes": "pat"},
+            "size": MAX_PATS_PER_REQUEST,
+        },
+        ignore=[404],
+    )
+
+    current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
+    results: list[azm_pat.PATView] = []
+
+    for p in current_pats_selected:
+        id = p.get("_id")
+        source = p.get("_source", {})
+        source["id"] = id
+        results.append(azm_pat.PATView.model_validate(source))
+    warnings = ""
+    if len(results) > MAX_PATS_PER_REQUEST:
+        warnings = (
+            f"There are over {MAX_PATS_PER_REQUEST} not all PATs have been returned please cleanup some old PATs."
+        )
+    return azm_pat.ListOfPAT(pats=results, warnings=warnings)
 
 
 def create_azul_security_index():
@@ -193,6 +225,31 @@ def create_azul_security_index():
             session.indices.put_template(name=index_name, body=template, ignore=404)
             session.indices.put_mapping(index=index_name, body=template["mappings"], ignore=404)
             session.indices.create(index=index_name)
+        # FUTURE - remove migration script in Azul 14.
+        # Script only needed for going from 12 -> 13
+        else:
+            # Update the index if PATs can't be listed, as this means the model is likely invalid.
+            try:
+                list_all_pats(session)
+            except Exception:
+                session.indices.put_template(name=index_name, body=template, ignore=404)
+                session.indices.put_mapping(index=index_name, body=template["mappings"], ignore=404)
+                session.update_by_query(
+                    index=index_name,
+                    body={
+                        "script": {
+                            "source": """
+                            if (!ctx._source.containsKey('api_access')) {
+                                ctx._source.api_access = ['all'];
+                            }
+                            """,
+                            "lang": "painless",
+                        },
+                        "query": {"bool": {"must_not": {"exists": {"field": "api_access"}}}},
+                    },
+                    wait_for_completion=True,
+                )
+
     except Exception as e:
         raise exceptions_bedrock.BaseAzulException(
             internal=ExceptionCodeEnum.RestapiFailedToCreateSecurityIndex, parameters={"inner_exception": str(e)}

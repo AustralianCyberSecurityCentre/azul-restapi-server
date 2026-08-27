@@ -1,3 +1,4 @@
+from azul_bedrock.models_auth import ApiAccessEnum
 import base64
 import datetime
 import json
@@ -87,6 +88,7 @@ class FakeOpensearch:
                                         "description": pat_val.description,
                                         "pat": pat_val.pat,
                                         "roles": pat_val.roles,
+                                        "api_access": pat_val.api_access,
                                         "owner_username": pat_val.owner_username,
                                         "creation_date": pat_val.creation_date,
                                         "last_used_date": pat_val.last_used_date,
@@ -116,6 +118,7 @@ class FakeOpensearch:
                             "last_used_date": p.last_used_date,
                             "pat_name": p.pat_name,
                             "roles": p.roles,
+                            "api_access": p.api_access,
                             "owner_username": p.owner_username,
                             "description": p.description,
                             "creation_date": p.creation_date,
@@ -163,6 +166,7 @@ class FakeOpensearch:
                     "description": pat.description,
                     "pat": pat.pat,
                     "roles": pat.roles,
+                    "api_access": pat.api_access,
                     "owner_username": pat.owner_username,
                     "creation_date": pat.creation_date,
                     "last_used_date": pat.last_used_date,
@@ -220,7 +224,9 @@ def create_pat_successfully(
         admin_token = gen_token(labels=["admin", "s-test1", "s-test2", "s-test3"], user="apiUser")
         created_pat_resp = client.post(
             "/v0/authenticate/pat",
-            json=azm_pat.PATRequest(name=pat_name, roles=["s-test1", "s-test2", "s-test3"]).model_dump(),
+            json=azm_pat.PATRequest(
+                name=pat_name, api_access=[ApiAccessEnum.All], roles=["s-test1", "s-test2", "s-test3"]
+            ).model_dump(),
             headers={"Authorization": admin_token},
         )
         return admin_token, azm_pat.PATIssue.model_validate(created_pat_resp.json())

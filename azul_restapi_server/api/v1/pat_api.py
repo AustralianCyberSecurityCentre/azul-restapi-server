@@ -7,7 +7,7 @@ import string
 
 from azul_bedrock import datastore, exceptions_bedrock
 from azul_bedrock.exception_enums import ExceptionCodeEnum
-from azul_bedrock.models_auth import UserInfo
+from azul_bedrock.models_auth import ApiAccessEnum, UserInfo
 from azul_bedrock.models_restapi import pat as azm_pat
 from azul_bedrock.settings import get_opensearch as get_os_settings
 from azul_security import admin, security
@@ -17,7 +17,6 @@ from starlette.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 
 from azul_restapi_server.security import pat_core
 
-MAX_PATS_PER_REQUEST = 10000
 PASSWORD_ALPHABET = string.ascii_letters + string.digits
 
 
@@ -101,6 +100,8 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         id=generate_pat(20),  # using a mini-pat as a random temporary id before opensearch issues one.
         pat=generated_pat,
         ready_api_key="",
+        # If ALL is set the API key has all permissions anyway, so only set that.
+        api_access=[ApiAccessEnum.All] if ApiAccessEnum.All in request_pat.api_access else request_pat.api_access,
         pat_name=request_pat.name,
         description=request_pat.description,
         roles=request_pat.roles,
@@ -154,6 +155,7 @@ async def create_pat(request_pat: azm_pat.PATRequest, creds: UserInfo = Depends(
         "owner_username": resp.owner_username,
         "creation_date": resp.creation_date,
         "last_used_date": resp.last_used_date,
+        "api_access": resp.api_access,
     }
 
     try:
@@ -194,30 +196,7 @@ async def list_pats(creds: UserInfo = Depends(get_user_creds)):
     """List the PATs currently stored in Azul."""
     _verify_user_is_admin(creds)
     os_session = pat_core.get_opensearch_pat_admin_session()
-    current_pats = os_session.search(
-        index=get_os_settings().opensearch_azul_security_index,
-        body={
-            "query": {"match_all": {}},
-            "_source": {"excludes": "pat"},
-            "size": MAX_PATS_PER_REQUEST,
-        },
-        ignore=[404],
-    )
-
-    current_pats_selected: list[dict] = current_pats.get("hits", {}).get("hits", [])
-    results: list[azm_pat.PATView] = []
-
-    for p in current_pats_selected:
-        id = p.get("_id")
-        source = p.get("_source", {})
-        source["id"] = id
-        results.append(azm_pat.PATView.model_validate(source))
-    warnings = ""
-    if len(results) > MAX_PATS_PER_REQUEST:
-        warnings = (
-            f"There are over {MAX_PATS_PER_REQUEST} not all PATs have been returned please cleanup some old PATs."
-        )
-    return azm_pat.ListOfPAT(pats=results, warnings=warnings)
+    return pat_core.list_all_pats(os_session)
 
 
 @router.delete(
