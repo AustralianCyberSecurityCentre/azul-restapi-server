@@ -3,7 +3,7 @@
 This is insecure.
 """
 
-from azul_bedrock.models_auth import CredentialFormat, Credentials, UserInfo
+from azul_bedrock.models_auth import ApiAccessEnum, CredentialFormat, Credentials, UserInfo
 from fastapi import Depends, Request
 
 from . import oidc_shared
@@ -22,4 +22,5 @@ def validate_token(request: Request, token: str = Depends(lambda: None)) -> User
         }
     )
     request.state.user_info.credentials = Credentials(format=CredentialFormat.none, unique="anony-moose")
+    request.state.user_info.api_access = [ApiAccessEnum.All]
     return request.state.user_info

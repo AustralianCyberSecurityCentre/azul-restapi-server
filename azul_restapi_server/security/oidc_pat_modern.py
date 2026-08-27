@@ -38,10 +38,6 @@ async def validate_token(
     if oauth_bearer:
         token_values = oauth_bearer.split(" ")
         request.state.user_info = oidc_shared.validate(token_values[-1], settings.oidc.client_id)
-        # TODO remove
-        print(
-            f"USER {request.state.user_info.username} with api_access: {request.state.user_info.api_access}",
-        )
         return request.state.user_info
 
     if api_key:
