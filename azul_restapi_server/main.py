@@ -121,7 +121,7 @@ app.audit_logger = _logger.audit_logger  # ty: ignore[unresolved-attribute]
 try:
     from opensearchpy import exceptions as elexc
 except ImportError:
-    elexc = None  # ty: ignore[invalid-assignment]
+    elexc = None
     print("Not handling opensearch exceptions.")
 else:
     # has to be installed into the app
