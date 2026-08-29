@@ -140,7 +140,7 @@ wheels = [
 
 [[package]]
 name = "azul-metastore"
-version = "13.0.10"
+version = "13.0.12"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -165,7 +165,7 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/433/cf5af36c2ec2d/azul_metastore-13.0.10-py3-none-any.whl", hash = "sha256:433cf5af36c2ec2d838faa19d1e4fecd0517b7734014b4ce9d0c5ad90dd8a46c" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/c24/d86cab9a78bfb/azul_metastore-13.0.12-py3-none-any.whl", hash = "sha256:c24d86cab9a78bfb47211d652e55a8c753e344bfe19f81f5360075e4cd71985d" },
 ]
 
 [[package]]
@@ -263,7 +263,7 @@ plugins = [
 
 [[package]]
 name = "azul-runner"
-version = "13.0.9"
+version = "13.0.11"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -276,12 +276,12 @@ dependencies = [
     { name = "watchdog" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/7ca/7bc1ea3f1ae52/azul_runner-13.0.9-py3-none-any.whl", hash = "sha256:7ca7bc1ea3f1ae5276c0715294e80105fe5cd53713c4956ae91178dbac669a57" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/d45/4397a9a93d395/azul_runner-13.0.11-py3-none-any.whl", hash = "sha256:d454397a9a93d3954537f1e7704435bc909ca6145bca614ae45916a4735ba11c" },
 ]
 
 [[package]]
 name = "azul-security"
-version = "13.0.5"
+version = "13.0.7"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -292,7 +292,7 @@ dependencies = [
     { name = "pydantic-settings" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/9b1/cc3492315215c/azul_security-13.0.5-py3-none-any.whl", hash = "sha256:9b1cc3492315215c265f3c36e2d89c00bca7a6ef43144dc4ba2a9aa0e022cdfd" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/c08/d025bbfd038e5/azul_security-13.0.7-py3-none-any.whl", hash = "sha256:c08d025bbfd038e50ecd1e7964455d47e72fe3ae72b405338aa80484ed6aa300" },
 ]
 
 [[package]]
