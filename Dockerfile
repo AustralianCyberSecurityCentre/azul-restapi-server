@@ -24,7 +24,9 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 COPY debian.txt /app/debian.txt
 RUN apt-get update && \
-    apt-get upgrade -y && \
+    apt-get upgrade -y \
+    -o Dpkg::Options::="--force-confdef" \
+    -o Dpkg::Options::="--force-confold" && \
     apt-get install -y --no-install-recommends \
     $(grep -vE "^\s*(#|$)" /app/debian.txt | tr "\n" " ") && \
     rm -rf /app/debian.txt /var/lib/apt/lists/*
