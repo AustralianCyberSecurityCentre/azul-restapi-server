@@ -104,7 +104,7 @@ dev = [
 plugins = [
     "azul-metastore>=11.0.61",
     "azul-plugin-retrohunt>=11.0.0",
-    "azul-alerter>=13.0.1-dev",
+    "azul-alerter>=13.0.1-dev3",
 ]
 
 [tool.ruff]
