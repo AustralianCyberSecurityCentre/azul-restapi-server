@@ -11,6 +11,7 @@ exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for 
 exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
+azul-alerter = false
 azul-plugin-retrohunt = false
 azul-security = false
 azul-nsrl-lookup-serve = false
@@ -116,8 +117,25 @@ wheels = [
 ]
 
 [[package]]
+name = "azul-alerter"
+version = "13.0.1.dev3+g6479d747a"
+source = { registry = "https://devpi.acsc.internal/azul/stable/" }
+dependencies = [
+    { name = "azul-bedrock" },
+    { name = "cachetools" },
+    { name = "click" },
+    { name = "fastapi" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "redis" },
+]
+wheels = [
+    { url = "https://devpi.acsc.internal/azul/stable/+f/ebd/f682f92aef6f3/azul_alerter-13.0.1.dev3+g6479d747a-py3-none-any.whl", hash = "sha256:ebdf682f92aef6f336217c7a3a32c1b1e58e4d40e56ddb5a1a22733a686d5442" },
+]
+
+[[package]]
 name = "azul-bedrock"
-version = "13.0.28"
+version = "13.0.32"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "babel" },
@@ -135,7 +153,7 @@ dependencies = [
     { name = "yara-x" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/9a3/e0e0d190a76e2/azul_bedrock-13.0.28-py3-none-any.whl", hash = "sha256:9a3e0e0d190a76e2b9b52945aaa432d1bd7ba4e3f027c3a43ba0cd607b257fba" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/ca8/15445bdfe4e27/azul_bedrock-13.0.32-py3-none-any.whl", hash = "sha256:ca815445bdfe4e277a30abd0de90c9fea0e22fdb64ebc5a34bd0d505ed048065" },
 ]
 
 [[package]]
@@ -220,6 +238,7 @@ dev = [
     { name = "ty" },
 ]
 plugins = [
+    { name = "azul-alerter" },
     { name = "azul-metastore" },
     { name = "azul-plugin-retrohunt" },
 ]
@@ -227,8 +246,8 @@ plugins = [
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=25.1.0" },
-    { name = "azul-bedrock", specifier = ">=10.0.33", index = "https://devpi.acsc.internal/azul/stable/" },
-    { name = "azul-security", specifier = ">=10.0.20", index = "https://devpi.acsc.internal/azul/stable/" },
+    { name = "azul-bedrock", specifier = ">=13.0.30", index = "https://devpi.acsc.internal/azul/stable/" },
+    { name = "azul-security", specifier = ">=13.0.0", index = "https://devpi.acsc.internal/azul/stable/" },
     { name = "cachetools", specifier = ">=7.0.1" },
     { name = "click", specifier = ">=8.3.1" },
     { name = "fastapi", specifier = ">=0.129.0" },
@@ -257,6 +276,7 @@ dev = [
     { name = "ty", specifier = ">=0.0.27" },
 ]
 plugins = [
+    { name = "azul-alerter", specifier = ">=13.0.1.dev3", index = "https://devpi.acsc.internal/azul/stable/" },
     { name = "azul-metastore", specifier = ">=11.0.61", index = "https://devpi.acsc.internal/azul/stable/" },
     { name = "azul-plugin-retrohunt", specifier = ">=11.0.0", index = "https://devpi.acsc.internal/azul/stable/" },
 ]
@@ -264,7 +284,7 @@ plugins = [
 [[package]]
 name = "azul-runner"
 version = "13.0.46"
-source = { registry = "https://devpi.acsc.internal/azul/stable/" }
+source = { registry = "https://devpi.acsc.internal/azul/stable" }
 dependencies = [
     { name = "azul-bedrock" },
     { name = "bitarray" },
@@ -926,7 +946,7 @@ wheels = [
 [[package]]
 name = "malpz"
 version = "13.0.11"
-source = { registry = "https://devpi.acsc.internal/azul/stable/" }
+source = { registry = "https://devpi.acsc.internal/azul/stable" }
 wheels = [
     { url = "https://devpi.acsc.internal/azul/stable/+f/4b1/26623fb6952e9/malpz-13.0.11-py3-none-any.whl", hash = "sha256:4b126623fb6952e972e2e6cad9c8aa2f044b46260d85205c7ce1346f11ad34b3" },
 ]
