@@ -35,8 +35,9 @@ def get_router():
         # don't install retrohunt if it is disabled
         if name == "retrohunt" and not retrohunt.enabled:
             continue
+        if name == "alerter" and not settings.restapi.alerter_enabled:
+            continue
         if name == "pat" and not settings.restapi.is_pat_enabled:
-            print("Skipped loading plugin pat, because pat isn't enabled.")
             continue
         print(f"loaded plugin: {name}")
         router.include_router(
