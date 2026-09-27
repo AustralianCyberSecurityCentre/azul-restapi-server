@@ -118,7 +118,7 @@ wheels = [
 
 [[package]]
 name = "azul-alerter"
-version = "13.0.1.dev4+g76c834c77"
+version = "13.0.2"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -130,7 +130,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/07c/c9a34d85960e8/azul_alerter-13.0.1.dev4+g76c834c77-py3-none-any.whl", hash = "sha256:07cc9a34d85960e8b3d1eeca4ed1dab463debee5f315c913f06f0627bf6a9a84" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/047/feab75de4a42c/azul_alerter-13.0.2-py3-none-any.whl", hash = "sha256:047feab75de4a42c73c1dd30dd80429e2fb9539e7d59de27f9644a27d503d3f4" },
 ]
 
 [[package]]
@@ -276,7 +276,7 @@ dev = [
     { name = "ty", specifier = ">=0.0.27" },
 ]
 plugins = [
-    { name = "azul-alerter", specifier = ">=13.0.1.dev3", index = "https://devpi.acsc.internal/azul/stable/" },
+    { name = "azul-alerter", specifier = ">=13.0.1", index = "https://devpi.acsc.internal/azul/stable/" },
     { name = "azul-metastore", specifier = ">=11.0.61", index = "https://devpi.acsc.internal/azul/stable/" },
     { name = "azul-plugin-retrohunt", specifier = ">=11.0.0", index = "https://devpi.acsc.internal/azul/stable/" },
 ]
