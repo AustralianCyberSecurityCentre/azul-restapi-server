@@ -70,6 +70,7 @@ class Restapi(BaseSettings):
     security: RestapiSecurityEnum = RestapiSecurityEnum.none
     headers: dict[str, str] = dict()
     model_config = SettingsConfigDict(env_prefix="restapi_")
+    alerter_enabled: bool = False
 
     @computed_field
     @property
