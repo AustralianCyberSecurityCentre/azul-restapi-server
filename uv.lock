@@ -158,7 +158,7 @@ wheels = [
 
 [[package]]
 name = "azul-metastore"
-version = "13.0.97"
+version = "13.0.100"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -183,7 +183,7 @@ dependencies = [
     { name = "xxhash" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/c2f/7431ff83b9794/azul_metastore-13.0.97-py3-none-any.whl", hash = "sha256:c2f7431ff83b9794e2d3d6fc0c76dd9a7e4d52d09d1d96ee691308edc93af100" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/664/e419c18292a21/azul_metastore-13.0.100-py3-none-any.whl", hash = "sha256:664e419c18292a213e3072b3374ce50cc7c47ee6548e154cc2d26fbc727af996" },
 ]
 
 [[package]]
