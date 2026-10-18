@@ -188,7 +188,7 @@ wheels = [
 
 [[package]]
 name = "azul-plugin-retrohunt"
-version = "13.0.144"
+version = "13.0.146"
 source = { registry = "https://devpi.acsc.internal/azul/stable/" }
 dependencies = [
     { name = "azul-bedrock" },
@@ -200,7 +200,7 @@ dependencies = [
     { name = "redis" },
 ]
 wheels = [
-    { url = "https://devpi.acsc.internal/azul/stable/+f/512/91b82c901071b/azul_plugin_retrohunt-13.0.144-py3-none-any.whl", hash = "sha256:51291b82c901071b9a54e7b222ee4634f0f3f282d4053c8035e8707b21e031a3" },
+    { url = "https://devpi.acsc.internal/azul/stable/+f/64f/9f17f4c0978a3/azul_plugin_retrohunt-13.0.146-py3-none-any.whl", hash = "sha256:64f9f17f4c0978a30a1302b2491ba3d61d006a3e7cdaf05cfc333fc72a915eda" },
 ]
 
 [[package]]
