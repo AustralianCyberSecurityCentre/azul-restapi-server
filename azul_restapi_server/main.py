@@ -117,6 +117,16 @@ _logger = RestAPILogger()
 app.logger = _logger.logger  # ty: ignore[unresolved-attribute]
 app.audit_logger = _logger.audit_logger  # ty: ignore[unresolved-attribute]
 
+if settings.restapi.security == settings.RestapiSecurityEnum.none:
+    # RestapiSecurityEnum.none is the default, and silently grants every
+    # caller ApiAccessEnum.All with no credentials. Make that impossible
+    # to miss instead of a surprise someone finds in prod.
+    _no_auth_warning = (
+        "RESTAPI_SECURITY=none -- this server is accepting every request unauthenticated "
+        "with full API access. This mode is for local development/testing only."
+    )
+    print(f"WARNING: {_no_auth_warning}", file=sys.stderr)
+    app.logger.warning(_no_auth_warning)  # ty: ignore[unresolved-attribute]
 
 try:
     from opensearchpy import exceptions as elexc
