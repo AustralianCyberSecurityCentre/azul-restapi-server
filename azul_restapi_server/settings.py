@@ -67,7 +67,10 @@ class Restapi(BaseSettings):
     reload: bool = False
     prefix: str = "/api"
     root_path: str = "/"
-    security: RestapiSecurityEnum = RestapiSecurityEnum.none
+    # No default on purpose. RestapiSecurityEnum.none accepts every request
+    # unauthenticated with full API access, that must be an explicit choice,
+    # not whatever happens when RESTAPI_SECURITY is left unset.
+    security: RestapiSecurityEnum
     headers: dict[str, str] = dict()
     model_config = SettingsConfigDict(env_prefix="restapi_")
     alerter_enabled: bool = False
